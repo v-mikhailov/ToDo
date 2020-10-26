@@ -1,9 +1,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { Container, Box, makeStyles} from '@material-ui/core';
+import { Container, Box, makeStyles } from '@material-ui/core';
 
 import ListColumn from './ListColumn';
 import { ColumnInterface, TaskInterface } from '../Interfaces/interfaces';
+
 
 
 const useStyles = makeStyles((theme) => ({
@@ -15,6 +16,10 @@ const useStyles = makeStyles((theme) => ({
    flexDirection: 'row',
    flexWrap: 'wrap',
   },
+  listItem: {
+    backgroundColor: 'gray',
+    marginBottom: theme.spacing(2),
+  }
 }));
 
 interface DeskContainerProps {

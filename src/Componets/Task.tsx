@@ -1,10 +1,13 @@
 import React from 'react';
 import { connect } from 'react-redux'
 import DeleteIcon from '@material-ui/icons/Delete';
-import { IconButton, ListItem, ListItemSecondaryAction, ListItemText, makeStyles } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { IconButton, makeStyles, Accordion, AccordionSummary, Divider, AccordionDetails, Typography, Checkbox } from '@material-ui/core';
+
 import { TaskInterface } from '../Interfaces/interfaces';
-import { deleteTask } from '../Redux/acion';
-import { DockSharp } from '@material-ui/icons';
+import { deleteTask, changeTaskType  } from '../Redux/acion';
+
+
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -14,37 +17,68 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface TaskProps {
-  deleteTask: (task: any) => object
+  deleteTask: (task: TaskInterface) => object,
+  changeTaskType: (task: TaskInterface) => object,
   data: TaskInterface,
 }
 
-const Task: React.FC<TaskProps> = ({deleteTask, data}) => {
+const Task: React.FC<TaskProps> = ({deleteTask, changeTaskType, data}) => {
   const styles = useStyles();
-
+  const [isTaskChecked, setIsTaskChecked] = React.useState(false);
+  
   const handleDelete = (event: React.MouseEvent) => {
      deleteTask(data);
   }
 
+  const handleCheckboxChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+      setIsTaskChecked(!isTaskChecked);
+      changeTaskType(data);
+  }
+
   return(
-    <ListItem className={styles.listItem}>
-      <ListItemText
-        primary={data.title}
-      />
-      <ListItemSecondaryAction>
-        <IconButton 
-          edge="end" 
-          aria-label="delete"
-          onClick={handleDelete}
+      <Accordion>
+        <AccordionSummary
+         expandIcon={<ExpandMoreIcon />}
         >
-          <DeleteIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
-    </ListItem>
+          <Typography>{data.title}</Typography>
+        </AccordionSummary>
+        <Divider/>
+        <AccordionDetails>
+          <Typography>{data.descr}</Typography>
+        </AccordionDetails>
+        <Divider/>
+        {
+          data.deadline && 
+          ( 
+            <AccordionDetails>
+              <Typography>Deadline time: {data.deadline}</Typography>
+            </AccordionDetails>
+          )
+        }
+        <Divider/>
+        <AccordionDetails>
+          <IconButton 
+            edge="end" 
+            aria-label="delete"
+            onClick={handleDelete}
+          >
+            <DeleteIcon />
+          </IconButton>
+          {data.type !== 'isCompleted' && (
+            <Checkbox
+              checked={isTaskChecked}
+              onChange={handleCheckboxChange}
+              inputProps={{ 'aria-label': 'primary checkbox' }}  
+            />
+          )}
+        </AccordionDetails>
+      </Accordion>
   )
 }
 
 const mapDispatchToProps = (dispatch: any) => ({
-    deleteTask: (task: any) => dispatch(deleteTask(task))
+    deleteTask: (task: TaskInterface) => dispatch(deleteTask(task)),
+    changeTaskType : (task: TaskInterface) => dispatch(changeTaskType(task))
   })
 
 

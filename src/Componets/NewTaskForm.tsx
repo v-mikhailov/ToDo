@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Accordion, AccordionSummary, Typography, makeStyles, AccordionDetails, TextField, IconButton, Divider, Switch, FormControlLabel, Button, Paper } from '@material-ui/core';
-import AddIcon from '@material-ui/icons/Add';
+import { Accordion, AccordionSummary, makeStyles, AccordionDetails, TextField, Divider, Switch, FormControlLabel, Button, Paper } from '@material-ui/core';
+
 
 import { createTask } from '../Redux/acion';
 import { TaskInterface } from '../Interfaces/interfaces';
@@ -17,26 +17,39 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '272px'
   },
+
   formBackground: {
     backgroundColor: '#f5f5f5'
   },
+
   formHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
     marginLeft: 'auto',
     marginRight: 'auto'
   },
+
   textInput: {
     width: "200px"
+  },
+
+  formBlock: {
+    display: 'block'
+  },
+
+  bottomSpacing: {
+    marginBottom: theme.spacing(1)
   }
+
 }));
 
 const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
   const styles = useStyles();
   const [titleInputValue, setTitleInputValue] = React.useState('');
   const [descrInputValue, setDescrInputValue] = React.useState('');
-  const [deadline, setDeadline] = React.useState('01.10.21');
+  const [deadline, setDeadline] = React.useState('');
   const [isUrgent, setIsUrgent] = React.useState(false);
+
 
   // Как сделать один общий метод для всех событий?
   const handleTitleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void  => {
@@ -50,6 +63,10 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
   const handleSwitchClick = (event: React.MouseEvent<HTMLButtonElement>): void => {
     setIsUrgent(!isUrgent);
   }
+  
+  const handleDateChange = (event: any): void => {
+    setDeadline(event.target.value);
+  }
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -62,10 +79,13 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
           type: type,
           id: Date.now()
       }
-      console.log('newTask', newTask);
-      // createTask(newTask);
-    } 
 
+      setTitleInputValue('');
+      setDescrInputValue('');
+      setDeadline('');
+      setIsUrgent(false);
+      createTask(newTask);
+    } 
   }
 
   return(
@@ -76,20 +96,19 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
         </AccordionSummary>
         <Divider/>
         <form 
-          noValidate 
           onSubmit={handleSubmit}
         >
-          <AccordionDetails>
+          <AccordionDetails className={styles.formBlock}>
               <TextField
                 id="standard-multiline-flexible"
                 label="Enter a title for this card"
                 variant="outlined"
-                helperText=""
                 onChange={handleTitleInputChange}
                 value={titleInputValue}
                 className={styles.textInput}
               />
               <TextField
+                required
                 id="standard-multiline-flexible"
                 label="Add task description"
                 variant="outlined"
@@ -102,7 +121,17 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
               />
           </AccordionDetails>
           <Divider />
-          <AccordionDetails>
+          <AccordionDetails className={styles.formBlock}>
+            <TextField
+              id="date"
+              label="Set deadline"
+              type="date"
+              value={deadline}
+              onChange={handleDateChange}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
             <FormControlLabel
               label="Urgent task"
               control={
@@ -127,25 +156,6 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
         </form>
       </Accordion>
     </Paper>
-
-
-    // <Paper className={styles.test} square>
-    //   <form noValidate id="addTaskFrom" onSubmit={handleSubmit}>
-    //     <ListItem>
-    //       <TextField
-    //         id="standard-multiline-flexible"
-    //         className={styles.textInput}
-    //         placeholder="Add new task"
-    //         onChange={handleChange}
-    //         value={inputValue}
-    //         helperText=""
-    //       />
-    //       <IconButton type="submit">
-    //         <AddIcon />
-    //       </IconButton>
-    //     </ListItem>
-    //   </form>
-    // </Paper>
   )
 }
 
