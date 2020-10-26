@@ -1,7 +1,10 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import DeleteIcon from '@material-ui/icons/Delete';
 import { IconButton, ListItem, ListItemSecondaryAction, ListItemText, makeStyles } from '@material-ui/core';
-import { TaskInterface } from './interfaces';
+import { TaskInterface } from '../Interfaces/interfaces';
+import { deleteTask } from '../Redux/acion';
+import { DockSharp } from '@material-ui/icons';
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
@@ -11,23 +14,27 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface TaskProps {
+  deleteTask: (task: any) => object
   data: TaskInterface,
-  onRemove: (id: number) => void
 }
 
-const Task: React.FC<TaskProps> = ({data, onRemove}) => {
+const Task: React.FC<TaskProps> = ({deleteTask, data}) => {
   const styles = useStyles();
+
+  const handleDelete = (event: React.MouseEvent) => {
+     deleteTask(data);
+  }
 
   return(
     <ListItem className={styles.listItem}>
       <ListItemText
-        primary={data.text}
+        primary={data.title}
       />
       <ListItemSecondaryAction>
         <IconButton 
           edge="end" 
           aria-label="delete"
-          onClick={()=> onRemove(data.id)}
+          onClick={handleDelete}
         >
           <DeleteIcon />
         </IconButton>
@@ -36,4 +43,9 @@ const Task: React.FC<TaskProps> = ({data, onRemove}) => {
   )
 }
 
-export default Task;
+const mapDispatchToProps = (dispatch: any) => ({
+    deleteTask: (task: any) => dispatch(deleteTask(task))
+  })
+
+
+export default connect(null, mapDispatchToProps)(Task);

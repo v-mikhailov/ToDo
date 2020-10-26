@@ -1,7 +1,10 @@
 import React from 'react';
-import { Container, Box, makeStyles,} from '@material-ui/core';
+import { connect } from 'react-redux';
+import { Container, Box, makeStyles} from '@material-ui/core';
+
 import ListColumn from './ListColumn';
-import { ColumnInterface } from './interfaces'
+import { ColumnInterface, TaskInterface } from '../Interfaces/interfaces';
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -14,16 +17,23 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const DeskContainer = () => {
+interface DeskContainerProps {
+  newTasks?: TaskInterface[]
+}
+
+const DeskContainer : React.FC<DeskContainerProps> = ({newTasks}) => {
   const styles = useStyles();
-  const [columns, setColumns] = React.useState<ColumnInterface[]>([{title: 'To Do'},{title: 'In progress'},{title: 'Done'}])
+  const [columns, setColumns] = React.useState<ColumnInterface[]>([{title: 'To Do', type: "new", id: 1},{title: 'In progress', type: 'inProgress' ,id: 2},{title: 'Done', type: 'isCompleted', id: 3}])
+
+  // что не так  с (tasks: TaskInterface[])?
+  const filterTasks = (tasks: any, columnType: string) => tasks.filter((task: TaskInterface) => task.type === columnType);
 
   return (
     <Container className={styles.container}>
       <Box className = {styles.deskContainer}>
         {
           columns.map(column => {
-           return <ListColumn data={column}/>
+           return <ListColumn key={column.id} columnData={column} tasks={filterTasks(newTasks, column.type)}/>
           })
         }
       </Box>
@@ -31,4 +41,10 @@ const DeskContainer = () => {
   )
 }
 
-export default DeskContainer;
+const mapStateToProps = (state: any) => {
+  return {
+    newTasks: state.tasks.tasks 
+  }
+}
+
+export default connect(mapStateToProps, null)(DeskContainer);
