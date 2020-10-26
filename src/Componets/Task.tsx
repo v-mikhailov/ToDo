@@ -79,7 +79,6 @@ const Task: React.FC<TaskProps> = ({deleteTask, changeTaskType, data}) => {
 const mapDispatchToProps = (dispatch: any) => ({
     deleteTask: (task: TaskInterface) => dispatch(deleteTask(task)),
     changeTaskType : (task: TaskInterface) => dispatch(changeTaskType(task))
-  })
-
+})
 
 export default connect(null, mapDispatchToProps)(Task);
