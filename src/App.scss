@@ -5,12 +5,34 @@
   margin-right: auto;
 }
 
-.task-list {
-  list-style-type: none;
-  margin: 0;
-  padding: 0;
-}
-
 .subtitle {
   text-align: center;
+}
+
+.dialog {
+
+  &__container {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 30px;
+  }
+
+  &__task-info {
+    width: 65%;
+  }
+  
+  &__task-actions {
+    width: 25%;
+  }
+
+}
+
+// css in js переделать
+.list-item {
+  background-color: #f6f6f7;
+  padding-left: 10px;
+  margin-bottom: 8px;
 }

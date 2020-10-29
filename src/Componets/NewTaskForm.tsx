@@ -1,15 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 
-import { Accordion, AccordionSummary, makeStyles, AccordionDetails, TextField, Divider, Switch, FormControlLabel, Button, Paper } from '@material-ui/core';
-
+import { FormControl, Accordion, AccordionSummary, makeStyles, AccordionDetails, TextField, Divider, Switch, FormControlLabel, Button, Paper, OutlinedInput, InputLabel } from '@material-ui/core';
 
 import { createTask } from '../Redux/acion';
 import { TaskInterface } from '../Interfaces/interfaces';
 
 
   interface NewTaskFormProps {
-    createTask: (task: any) => object,
+    createTask: (task: TaskInterface) => object,
     type: string
   }
 
@@ -45,13 +44,16 @@ const useStyles = makeStyles((theme) => ({
 
 const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
   const styles = useStyles();
+  const [formIsExpanded, setFormIsExpanded] = React.useState(false);
   const [titleInputValue, setTitleInputValue] = React.useState('');
   const [descrInputValue, setDescrInputValue] = React.useState('');
   const [deadline, setDeadline] = React.useState('');
   const [isUrgent, setIsUrgent] = React.useState(false);
 
+  const handleFormClick = (event: React.MouseEvent<HTMLElement>): void => {
+      setFormIsExpanded(!formIsExpanded);
+  }
 
-  // Как сделать один общий метод для всех событий?
   const handleTitleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void  => {
     setTitleInputValue(event.target.value);
   }
@@ -84,41 +86,51 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
       setDescrInputValue('');
       setDeadline('');
       setIsUrgent(false);
+      setFormIsExpanded(false);
       createTask(newTask);
     } 
   }
 
   return(
     <Paper className={styles.form} square>
-      <Accordion className={styles.formBackground}>
-        <AccordionSummary>
+      <Accordion 
+        className={styles.formBackground}
+        expanded={formIsExpanded}
+      >
+
+        <AccordionSummary onClick={handleFormClick}>
           <Button className={styles.formHeading}>Add new task</Button>
         </AccordionSummary>
         <Divider/>
         <form 
           onSubmit={handleSubmit}
+          noValidate
         >
           <AccordionDetails className={styles.formBlock}>
-              <TextField
-                id="standard-multiline-flexible"
-                label="Enter a title for this card"
-                variant="outlined"
+            <FormControl
+              required={true}
+              variant="outlined"
+            >
+              <InputLabel>Enter a title for this card</InputLabel>
+              <OutlinedInput 
+                id="component-outlined"
+                multiline={true}
                 onChange={handleTitleInputChange}
                 value={titleInputValue}
                 className={styles.textInput}
               />
-              <TextField
-                required
-                id="standard-multiline-flexible"
-                label="Add task description"
-                variant="outlined"
-                multiline
-                rows={4}
-                helperText=""
-                onChange={handleDescrInputChange}
-                value={descrInputValue}
-                className={styles.textInput}
-              />
+            </FormControl>
+            <TextField
+              id="standard-multiline-flexible"
+              label="Add task description"
+              variant="outlined"
+              multiline
+              rows={4}
+              helperText=""
+              onChange={handleDescrInputChange}
+              value={descrInputValue}
+              className={styles.textInput}
+            />
           </AccordionDetails>
           <Divider />
           <AccordionDetails className={styles.formBlock}>

@@ -12,11 +12,9 @@ const store = createStore(rootReducer);
 store.subscribe(() => console.log('stroe', store.getState()));
 
 ReactDOM.render(
-  <React.StrictMode>
     <Provider store={store}>
       <App />
-    </Provider>
-  </React.StrictMode>,
+    </Provider>,
   document.getElementById('root')
 );
 

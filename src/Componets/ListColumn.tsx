@@ -14,6 +14,13 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     backgroundColor: '#f5f5f5',
   },
+  taskList: {
+    listStyleType: 'none',
+    margin: 0,
+    paddingTop: '10px',
+    paddingLeft: 0,
+    paddingRight: 0
+  },
   cardTitle: {
     textAlign: 'center'
   }
@@ -21,9 +28,7 @@ const useStyles = makeStyles((theme) => ({
 
 interface ListColumnProps {
   columnData: ColumnInterface,
-  tasks?: any,
-  // почему так не работает?
-  // tasks?: TaskInterface[] 
+  tasks: TaskInterface[]
 } 
 
 const ListColumn : React.FC<ListColumnProps> = ({columnData, tasks}) => {
@@ -38,7 +43,7 @@ const ListColumn : React.FC<ListColumnProps> = ({columnData, tasks}) => {
         { tasks.length === 0 ? (
             <p className="subtitle">Заданий нет!</p>
           ) : (
-            <ul className='task-list'>
+            <ul className={styles.taskList}>
             {
               tasks.map((task: TaskInterface) => {
                 return (

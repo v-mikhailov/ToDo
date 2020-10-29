@@ -6,7 +6,7 @@ const Header = () => {
 
   return (
     <AppBar position="static">
-      <Toolbar className="styles.toolBar">
+      <Toolbar className="">
         <Grid
           container
           direction="row"

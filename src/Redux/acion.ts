@@ -1,21 +1,21 @@
-import { CREATE_TASK, DELETE_TASK, CHANGE_TASK_TYPE } from "./types";
-import {  TaskInterface } from '../Interfaces/interfaces';
+import { CREATE_TASK, DELETE_TASK, CHANGE_TASK_TYPE } from "./constants";
+import {  TaskInterface, ColumnActionInterfaces } from '../Interfaces/interfaces';
 
-export const createTask = (task: any) => {
+export const createTask = (task: TaskInterface): ColumnActionInterfaces => {
   return {
     type: CREATE_TASK,
     payload: task
   }
 }
 
-export const deleteTask = (task: TaskInterface) => {
+export const deleteTask = (task: TaskInterface): ColumnActionInterfaces => {
   return {
     type: DELETE_TASK,
-    payload: task
+    payload: task.id
   }
 }
 
-export const changeTaskType = (task: TaskInterface) => {
+export const changeTaskType = (task: TaskInterface): ColumnActionInterfaces => {
   return {
     type: CHANGE_TASK_TYPE,
     payload: task

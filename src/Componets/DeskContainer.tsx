@@ -1,10 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { connect, ConnectedProps } from 'react-redux';
 import { Container, Box, makeStyles } from '@material-ui/core';
 
-import ListColumn from './ListColumn';
-import { ColumnInterface, TaskInterface } from '../Interfaces/interfaces';
 
+import ListColumn from './ListColumn';
+import { ColumnInterface, TaskInterface, RootState } from '../Interfaces/interfaces';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -19,26 +19,30 @@ const useStyles = makeStyles((theme) => ({
   listItem: {
     backgroundColor: 'gray',
     marginBottom: theme.spacing(2),
-  }
+  },
 }));
 
-interface DeskContainerProps {
-  newTasks?: TaskInterface[]
-}
+export type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const DeskContainer : React.FC<DeskContainerProps> = ({newTasks}) => {
+const DeskContainer : React.FC<PropsFromRedux> = ({newTasks , columns}) => {
   const styles = useStyles();
-  const [columns, setColumns] = React.useState<ColumnInterface[]>([{title: 'To Do', type: "new", id: 1},{title: 'In progress', type: 'inProgress' ,id: 2},{title: 'Done', type: 'isCompleted', id: 3}])
+  // const [columns, setColumns] = React.useState<ColumnInterface[]>([{title: 'To Do', type: "new", id: 1},{title: 'In progress', type: 'inProgress' ,id: 2},{title: 'Done', type: 'isCompleted', id: 3}])
 
-  // что не так  с (tasks: TaskInterface[])?
-  const filterTasks = (tasks: any, columnType: string) => tasks.filter((task: TaskInterface) => task.type === columnType);
+  const filterTasks = (tasks: TaskInterface[], columnType: string) => tasks.filter((task: TaskInterface) => task.type === columnType);
 
   return (
     <Container className={styles.container}>
       <Box className = {styles.deskContainer}>
         {
-          columns.map(column => {
-           return <ListColumn key={column.id} columnData={column} tasks={filterTasks(newTasks, column.type)}/>
+          // как исправить эту ошибку?
+          columns.map((column: ColumnInterface) => {
+            return (
+              <ListColumn
+                key={column.id}
+                columnData={column} 
+                tasks={filterTasks(newTasks, column.type)}
+              />
+            )
           })
         }
       </Box>
@@ -46,10 +50,13 @@ const DeskContainer : React.FC<DeskContainerProps> = ({newTasks}) => {
   )
 }
 
-const mapStateToProps = (state: any) => {
+const mapStateToProps = (state: RootState) => {
   return {
-    newTasks: state.tasks.tasks 
+    newTasks: state.tasks.tasks,
+    columns: state.columns.columns
   }
 }
 
-export default connect(mapStateToProps, null)(DeskContainer);
+const connector = connect(mapStateToProps, null);
+
+export default connector(DeskContainer);
