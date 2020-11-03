@@ -4,7 +4,9 @@ import { Container, Box, makeStyles } from '@material-ui/core';
 
 
 import ListColumn from './ListColumn';
+import Dialog from './Dialog';
 import { ColumnInterface, TaskInterface, RootState } from '../Interfaces/interfaces';
+import { closeTask } from '../Redux/acion';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -24,17 +26,22 @@ const useStyles = makeStyles((theme) => ({
 
 export type PropsFromRedux = ConnectedProps<typeof connector>;
 
-const DeskContainer : React.FC<PropsFromRedux> = ({newTasks , columns}) => {
+const DeskContainer : React.FC<PropsFromRedux> = ({newTasks , columns, openedTask, closeTask}) => {
   const styles = useStyles();
-  // const [columns, setColumns] = React.useState<ColumnInterface[]>([{title: 'To Do', type: "new", id: 1},{title: 'In progress', type: 'inProgress' ,id: 2},{title: 'Done', type: 'isCompleted', id: 3}])
-
   const filterTasks = (tasks: TaskInterface[], columnType: string) => tasks.filter((task: TaskInterface) => task.type === columnType);
+  const handleClick = (event: any) => {
+    if (event.target.className === 'MuiDialog-container MuiDialog-scrollPaper') {
+      closeTask();
+    }
+  }
 
   return (
     <Container className={styles.container}>
-      <Box className = {styles.deskContainer}>
+      <Box 
+        className={styles.deskContainer}
+        onClick={handleClick}
+      >
         {
-          // как исправить эту ошибку?
           columns.map((column: ColumnInterface) => {
             return (
               <ListColumn
@@ -45,6 +52,7 @@ const DeskContainer : React.FC<PropsFromRedux> = ({newTasks , columns}) => {
             )
           })
         }
+        <Dialog fullTask={openedTask}/>
       </Box>
     </Container>
   )
@@ -53,10 +61,15 @@ const DeskContainer : React.FC<PropsFromRedux> = ({newTasks , columns}) => {
 const mapStateToProps = (state: RootState) => {
   return {
     newTasks: state.tasks.tasks,
-    columns: state.columns.columns
+    openedTask: state.tasks.openedTask,
+    columns: state.columns.columns,
   }
 }
 
-const connector = connect(mapStateToProps, null);
+const mapDispatchToProps = {
+  closeTask
+}
+
+const connector = connect(mapStateToProps, mapDispatchToProps);
 
 export default connector(DeskContainer);

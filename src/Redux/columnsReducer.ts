@@ -2,17 +2,17 @@ const initialState = {
   columns: [
     {
       title: 'To Do',
-      type: "new",
+      type: "todo",
       id: 1
     },
     {
       title: 'In progress',
-      type: 'inProgress',
+      type: 'inpogress',
       id: 2
     },
     {
       title: 'Done', 
-      type: 'isCompleted', 
+      type: 'done', 
       id: 3
     }
   ]

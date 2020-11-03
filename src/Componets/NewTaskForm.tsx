@@ -7,10 +7,10 @@ import { createTask } from '../Redux/acion';
 import { TaskInterface } from '../Interfaces/interfaces';
 
 
-  interface NewTaskFormProps {
-    createTask: (task: TaskInterface) => object,
-    type: string
-  }
+interface NewTaskFormProps {
+  createTask: (task: TaskInterface) => object,
+  type: string
+}
 
 const useStyles = makeStyles((theme) => ({
   form: {
