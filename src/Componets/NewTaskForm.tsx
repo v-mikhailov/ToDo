@@ -9,7 +9,7 @@ import { TaskInterface } from '../Interfaces/interfaces';
 
 interface NewTaskFormProps {
   createTask: (task: TaskInterface) => object,
-  type: string
+  columnId: number
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -42,7 +42,7 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
+const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, columnId}) => {
   const styles = useStyles();
   const [formIsExpanded, setFormIsExpanded] = React.useState(false);
   const [titleInputValue, setTitleInputValue] = React.useState('');
@@ -78,8 +78,8 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, type}) => {
           descr: descrInputValue,
           deadline: deadline,
           isUrgent: isUrgent,
-          type: type,
-          id: Date.now()
+          id: Date.now(),
+          columnId: columnId
       }
 
       setTitleInputValue('');

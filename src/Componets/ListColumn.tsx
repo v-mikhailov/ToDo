@@ -58,7 +58,7 @@ const ListColumn : React.FC<ListColumnProps> = ({columnData, tasks}) => {
           )
         }
       </Paper>
-      <NewTaskForm type={columnData.type}/>
+      <NewTaskForm columnId={columnData.id}/>
     </Box>
   )
 }

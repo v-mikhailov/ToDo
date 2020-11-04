@@ -1,5 +1,5 @@
 import { CREATE_TASK, DELETE_TASK, CHANGE_TASK_TYPE, OPEN_TASK, CLOSE_TASK } from './constants';
-import { TaskInterface, ColumnActionInterfaces } from '../Interfaces/interfaces';
+import { TaskInterface, TaskActionInterfaces } from '../Interfaces/interfaces';
 
 interface initialState {
   tasks: TaskInterface[],
@@ -17,7 +17,7 @@ const initialState: initialState = {
   }
 }
 
-export const tasksReducer = (state = initialState, action: ColumnActionInterfaces) => {
+export const tasksReducer = (state = initialState, action: TaskActionInterfaces) => {
   switch(action.type) {
     case CREATE_TASK: {
       return { ...state, tasks: state.tasks.concat(action.payload)}
@@ -34,13 +34,15 @@ export const tasksReducer = (state = initialState, action: ColumnActionInterface
     }
     case CHANGE_TASK_TYPE: {
       const newState = state.tasks.map((task: TaskInterface) => {
-        if (task.id === action.payload.id) {
-          return task.type = action.payload.type
-        } 
+        if (task.id === action.payload.taskId) {
+          task.columnId = action.payload.columnId
+          return task
+        }
         return task
       })
       return {...state, tasks: newState}
     }
+
     case OPEN_TASK: {
       const newOpendTask = {
         isOpen: true,

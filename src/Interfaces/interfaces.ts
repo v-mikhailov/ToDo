@@ -1,4 +1,4 @@
-import { CREATE_TASK, DELETE_TASK, CHANGE_TASK_TYPE, OPEN_TASK, CLOSE_TASK } from '../Redux/constants';
+import { CREATE_TASK, DELETE_TASK, CHANGE_TASK_TYPE, OPEN_TASK, CLOSE_TASK, CREATE_COLUMN } from '../Redux/constants';
 import { rootReducer } from '../Redux/rootReducer';
 
 export interface TaskInterface {
@@ -6,20 +6,14 @@ export interface TaskInterface {
   descr: string,
   deadline: string,
   isUrgent: boolean,
-  type: string,
-  id: number
+  id: number,
+  columnId: number
 }
 
 export interface ColumnInterface {
   title: string,
-  type: string,
   id: number
 }
-
-// export interface DeskStateInterface {
-//   tasks?: TaskInterface[],
-//   columns?: ColumnInterface[]
-// }
 
 interface CreateTaskAction {
   type: typeof CREATE_TASK,
@@ -31,9 +25,12 @@ interface DeleteTaskAction {
   payload: number
 }
 
-interface ChangeTaskTypeAction {
+interface ChangeTaskColumnAction {
   type: typeof CHANGE_TASK_TYPE,
-  payload: TaskInterface
+  payload: {
+    columnId: number,
+    taskId: number
+  }
 }
 
 interface OpenTaskAction {
@@ -49,7 +46,13 @@ interface CloseTaskAction {
   }
 }
 
-export type ColumnActionInterfaces = CreateTaskAction | DeleteTaskAction | ChangeTaskTypeAction | OpenTaskAction | CloseTaskAction;
+interface CreateColumnAction {
+  type: typeof CREATE_COLUMN,
+  payload: ColumnInterface
+}
 
-export type RootState = ReturnType<typeof rootReducer>
+export type TaskActionInterfaces = CreateTaskAction | DeleteTaskAction | ChangeTaskColumnAction | OpenTaskAction | CloseTaskAction;
+export type ColumnActionInterface = CreateColumnAction;
+
+export type RootState = ReturnType<typeof rootReducer>;
 
