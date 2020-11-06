@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { IconButton, Divider, Typography, Dialog, Toolbar, Box, DialogTitle, TextField, List, ListItem, ListItemText } from '@material-ui/core';
+import { IconButton, Divider, Typography, Dialog, Toolbar, Box, DialogTitle, TextField, List, ListItem, ListItemText, Popover } from '@material-ui/core';
 import WhatshotOutlinedIcon from '@material-ui/icons/WhatshotOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import { TaskInterface, ColumnInterface } from '../Interfaces/interfaces';
@@ -37,33 +37,33 @@ const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, deleteTask, columns}) 
               <Box>
                 <Toolbar disableGutters={true}>
                   <DialogTitle>
-                    {fullTask.task!.title}
+                    {fullTask.task?.title}
                   </DialogTitle>
                   {/* сделать popover */}
-                  { fullTask.task!.isUrgent &&  <WhatshotOutlinedIcon/> }
+                  { fullTask.task?.isUrgent &&  <WhatshotOutlinedIcon/> }
                 </Toolbar>
               </Box>
               <TextField
                 label="Deadline"
-                defaultValue={fullTask.task!.deadline}
+                defaultValue={fullTask.task?.deadline}
               />
             </Toolbar>
             <Divider />
             <div className='dialog__container'>
               <div className='dialog__task-info'>
-              <Typography variant="subtitle1">
+              <Typography component={'span'} variant="subtitle1">
                 <Box fontWeight="fontWeightMedium" m={1}>
                   Description
                 </Box>
               </Typography>
-              <Typography variant="body1">
+              <Typography component={'span'} variant="body1">
                 <Box fontWeight="fontWeightRegular" m={1}>
-                {fullTask.task!.descr}
+                {fullTask.task?.descr}
                 </Box>
               </Typography>
               </div>
               <div className='dialog__task-actions'>
-                <Typography variant="subtitle1">
+                <Typography component={'span'} variant="subtitle1">
                   <Box fontWeight="fontWeightMedium" m={1}>
                     Actions: 
                   </Box>
@@ -82,7 +82,7 @@ const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, deleteTask, columns}) 
                     />
                   </ListItem>
                 </List>
-                <Typography variant="subtitle1">
+                <Typography component={'span'} variant="subtitle1">
                   <Box fontWeight="fontWeightMedium" m={1}>
                     Move task: 
                   </Box>
@@ -90,13 +90,11 @@ const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, deleteTask, columns}) 
                 <List>
                   {
                     columns.map(column => {
-                      if (column.id !== fullTask.task!.columnId) {
-                        return <MoveToCard currentColumn={column} currentTaskId={fullTask.task!.id} key={fullTask.task!.columnId + 1}/>
+                      if (column.id !== fullTask.task?.columnId) {
+                        return <MoveToCard currentColumn={column} currentTaskId={fullTask.task!.id} key={column.id++}/>
                       }
-                      return <></>
                     })
                   }
-
                 </List>
               </div>
             </div>
