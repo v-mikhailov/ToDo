@@ -1,39 +1,42 @@
 import React from 'react';
-import DeleteIcon from '@material-ui/icons/Delete';
-import { IconButton, ListItem, ListItemSecondaryAction, ListItemText, makeStyles } from '@material-ui/core';
-import { TaskInterface } from './interfaces';
+import { connect } from 'react-redux'
+import { makeStyles, ListItem, ListItemText } from '@material-ui/core';
+
+import { TaskInterface } from '../Interfaces/interfaces';
+import { openTask  } from '../Redux/acion';
+
+interface TaskProps {
+  openTask: (task: TaskInterface) => object,
+  data: TaskInterface,
+}
 
 const useStyles = makeStyles((theme) => ({
   listItem: {
     backgroundColor: 'white',
-    marginBottom: theme.spacing(2)
+    marginBottom: '10px'
   }
 }));
 
-interface TaskProps {
-  data: TaskInterface,
-  onRemove: (id: number) => void
-}
-
-const Task: React.FC<TaskProps> = ({data, onRemove}) => {
+const Task: React.FC<TaskProps> = ({ openTask, data}) => {
   const styles = useStyles();
 
+  const handleTaskClick = (event: React.MouseEvent) => {
+    openTask(data);
+  }
+
   return(
-    <ListItem className={styles.listItem}>
-      <ListItemText
-        primary={data.text}
-      />
-      <ListItemSecondaryAction>
-        <IconButton 
-          edge="end" 
-          aria-label="delete"
-          onClick={()=> onRemove(data.id)}
-        >
-          <DeleteIcon />
-        </IconButton>
-      </ListItemSecondaryAction>
+    <ListItem 
+      className={styles.listItem} 
+      divider={true}
+      onClick={handleTaskClick}
+    >
+      <ListItemText primary={data.title} />
     </ListItem>
   )
 }
 
-export default Task;
+const mapDispatchToProps = {
+    openTask
+}
+
+export default connect(null, mapDispatchToProps)(Task);

@@ -1,9 +1,9 @@
 import React from 'react';
-
 import { Paper, Typography, makeStyles, Box } from '@material-ui/core';
+
 import NewTaskForm from './NewTaskForm';
 import Task from './Task'
-import { TaskInterface, ColumnInterface } from './interfaces';
+import { TaskInterface, ColumnInterface } from '../Interfaces/interfaces';
 
 
 const useStyles = makeStyles((theme) => ({
@@ -14,56 +14,41 @@ const useStyles = makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
     backgroundColor: '#f5f5f5',
   },
+  taskList: {
+    listStyleType: 'none',
+    margin: 0,
+    paddingTop: '10px',
+    paddingLeft: 0,
+    paddingRight: 0
+  },
   cardTitle: {
     textAlign: 'center'
   }
 }));
 
 interface ListColumnProps {
-  data: ColumnInterface
+  columnData: ColumnInterface,
+  tasks: TaskInterface[]
 } 
 
-const ListColumn : React.FC<ListColumnProps> = ({data}) => {
+const ListColumn : React.FC<ListColumnProps> = ({columnData, tasks}) => {
   const styles = useStyles();
-  const [inputValue, setInputValue] = React.useState('');
-  const [tasks, setTasks] = React.useState<TaskInterface[]>([]);
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>): void  => {
-    setInputValue(event.target.value);
-  }
-
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>): void  => {
-    event.preventDefault();
-    if (inputValue !== '') {
-      const newTask: TaskInterface = {
-        text: inputValue,
-        isComplite: false,
-        id: Date.now()
-      }
-      setTasks(prev => [newTask, ...prev])
-      setInputValue('');
-    }
-  }
-
-  const removeHandler = (id: number) => {
-    setTasks(prev => prev.filter(task => task.id !== id))
-  }
   return (
     <Box>
       <Paper variant="outlined" square className={styles.desk}>
         <Typography variant="h6" className={styles.cardTitle}>
-          {data.title}
+          {columnData.title}
         </Typography>
         { tasks.length === 0 ? (
             <p className="subtitle">Заданий нет!</p>
           ) : (
-            <ul className='task-list'>
+            <ul className={styles.taskList}>
             {
-              tasks.map(task => {
+              tasks.map((task: TaskInterface) => {
                 return (
                   <Task 
                     data={task}
-                    onRemove={removeHandler}
                     key={task.id}
                   />
                 ) 
@@ -73,11 +58,7 @@ const ListColumn : React.FC<ListColumnProps> = ({data}) => {
           )
         }
       </Paper>
-      <NewTaskForm 
-        onHandleChange={handleChange}
-        onHandleSubmit={handleSubmit}
-        inputValue={inputValue}
-      />
+      <NewTaskForm columnId={columnData.id}/>
     </Box>
   )
 }
