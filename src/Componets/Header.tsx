@@ -1,8 +1,30 @@
 import React from 'react';
-import { Grid, AppBar,  Toolbar, IconButton, Typography, Box, Button } from '@material-ui/core';
+import { Grid, AppBar,  Toolbar, IconButton, Typography, Box, Button} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
+import EditIcon from '@material-ui/icons/Edit';
+
+import DesksListPopup from './DesksListPopup';
+import DeskNamePopup from './DeskNamePopup';
 
 const Header = () => {
+  const [desksListPopupIsOpen, setDesksListPopupIsOpen] = React.useState(false);
+  const [desksNamePopupIsOpen, setDesksNamePopupIsOpen] = React.useState(false);
+
+  const handleDeskListPopupClickOpen = () => {
+    setDesksListPopupIsOpen(true);
+  }
+
+  const handleDeskListPopupClose = () => {
+    setDesksListPopupIsOpen(false);
+  }
+
+  const handleDeskNamePopupClickOpen = () => {
+    setDesksNamePopupIsOpen(true)
+  }
+
+  const handleDeskNamePopupClose = () => {
+    setDesksNamePopupIsOpen(false);
+  }
 
   return (
     <AppBar position="static">
@@ -16,11 +38,23 @@ const Header = () => {
           <Typography variant="h4">
             To Do List
           </Typography>
-          <Typography variant="h5">
-            Desk 1
-          </Typography>
+          <Toolbar>
+            <Typography variant="h5">
+              Desk 1
+            </Typography>
+            <IconButton 
+              color="inherit"
+              onClick={handleDeskNamePopupClickOpen}
+            >
+              <EditIcon/>
+            </IconButton>
+          </Toolbar>
           <Box>
-            <Button variant="outlined" color="inherit">
+            <Button 
+              variant="outlined" 
+              color="inherit"
+              onClick={handleDeskListPopupClickOpen}
+            >
               My Desks
             </Button>
             <IconButton color="inherit">
@@ -29,6 +63,14 @@ const Header = () => {
           </Box>
         </Grid>
      </Toolbar>
+     <DesksListPopup 
+        open={desksListPopupIsOpen}
+        onClose={handleDeskListPopupClose}
+      />
+      <DeskNamePopup 
+        open={desksNamePopupIsOpen}
+        onClose={handleDeskNamePopupClose}
+      />
     </AppBar>   
   )
 }

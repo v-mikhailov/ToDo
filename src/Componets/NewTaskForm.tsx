@@ -151,7 +151,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({createTask, columnId}) => {
                 color="secondary" 
                 type="submit"
               >
-                Add a task to the list
+                Add task to the list
               </Button>
             </form>
           </AccordionDetails>

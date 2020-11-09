@@ -65,7 +65,7 @@ const DeskContainer : React.FC<PropsFromRedux> = ({newTasks , columns, openedTas
           <NewColumnForm prevColumns={columns}/>
         </div>
       </div>
-    </Container>
+    </Container> 
   )
 }
 
