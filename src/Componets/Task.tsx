@@ -36,7 +36,7 @@ const Task: React.FC<TaskProps> = ({ openTask, data}) => {
 }
 
 const mapDispatchToProps = {
-    openTask
+   openTask
 }
 
 export default connect(null, mapDispatchToProps)(Task);

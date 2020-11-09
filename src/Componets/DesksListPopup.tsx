@@ -26,10 +26,10 @@ const DesksListPopup: React.FC<DesksListPopupProps> = ({open, onClose}) => {
             <Link to="/">Desk 1</Link>
           </li>
           <li>
-            <Link to="/Desk2">Desk 2</Link>
+            <Link to="/desk2">Desk 2</Link>
           </li>
           <li>
-            <Link to="/Desk3">Desk 3</Link>
+            <Link to="/desk3">Desk 3</Link>
           </li>
         </ul>
       </DialogContent>

@@ -6,7 +6,11 @@ import EditIcon from '@material-ui/icons/Edit';
 import DesksListPopup from './DesksListPopup';
 import DeskNamePopup from './DeskNamePopup';
 
-const Header = () => {
+interface HeaderProps {
+  deskName: string
+}
+
+const Header: React.FC<HeaderProps> = ({deskName}) => {
   const [desksListPopupIsOpen, setDesksListPopupIsOpen] = React.useState(false);
   const [desksNamePopupIsOpen, setDesksNamePopupIsOpen] = React.useState(false);
 
@@ -40,13 +44,13 @@ const Header = () => {
           </Typography>
           <Toolbar>
             <Typography variant="h5">
-              Desk 1
+              {deskName}
             </Typography>
             <IconButton 
               color="inherit"
               onClick={handleDeskNamePopupClickOpen}
             >
-              <EditIcon/>
+              <EditIcon fontSize="small"/>
             </IconButton>
           </Toolbar>
           <Box>
@@ -74,5 +78,6 @@ const Header = () => {
     </AppBar>   
   )
 }
+
 
 export default Header;

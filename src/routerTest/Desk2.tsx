@@ -4,6 +4,7 @@ const Desk2 = () => {
   return (
     <div>
       Это вторая доска
+      
     </div>
   )
 }
