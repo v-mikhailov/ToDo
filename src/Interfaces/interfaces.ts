@@ -58,7 +58,10 @@ interface CreateColumnAction {
 
 interface ChangeDeskName {
   type: typeof CHANGE_DESK_NAME,
-  payload: string
+  payload: {
+    title: string,
+    id: number
+  }
 }
 
 export type TaskActionInterfaces = CreateTaskAction | DeleteTaskAction | ChangeTaskColumnAction | OpenTaskAction | CloseTaskAction;

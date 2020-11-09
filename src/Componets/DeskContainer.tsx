@@ -28,10 +28,15 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 export type PropsFromRedux = ConnectedProps<typeof connector>;
+interface DeskContainerProps {
+  deskId: number
+}
 
-const DeskContainer : React.FC<PropsFromRedux> = ({newTasks , columns, openedTask, closeTask}) => {
+const DeskContainer : React.FC<PropsFromRedux> | DeskContainerProps = ({newTasks , columns, openedTask, closeTask, deskId}) => {
   const styles = useStyles();
+
   const filterTasks = (tasks: TaskInterface[], columnId: number) => tasks.filter((task: TaskInterface) => task.columnId === columnId);
+
   const handleClick = (event: any) => {
     if (event.target.className === 'MuiDialog-container MuiDialog-scrollPaper') {
       closeTask();

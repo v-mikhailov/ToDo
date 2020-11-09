@@ -7,10 +7,11 @@ import DesksListPopup from './DesksListPopup';
 import DeskNamePopup from './DeskNamePopup';
 
 interface HeaderProps {
-  deskName: string
+  deskName: string,
+  deskId: number
 }
 
-const Header: React.FC<HeaderProps> = ({deskName}) => {
+const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
   const [desksListPopupIsOpen, setDesksListPopupIsOpen] = React.useState(false);
   const [desksNamePopupIsOpen, setDesksNamePopupIsOpen] = React.useState(false);
 
@@ -73,6 +74,7 @@ const Header: React.FC<HeaderProps> = ({deskName}) => {
       />
       <DeskNamePopup 
         open={desksNamePopupIsOpen}
+        deskId={deskId}
         onClose={handleDeskNamePopupClose}
       />
     </AppBar>   

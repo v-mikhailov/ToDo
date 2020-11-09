@@ -48,10 +48,13 @@ export const createColumn = (column: ColumnInterface) => {
     payload: column
   }
 }
-
-export const changeDeskName = (name: string) => {
+// DeskName: DeskInterface если ничего не измениться
+export const changeDeskName = (deskName: any) => {
   return {
     type: CHANGE_DESK_NAME,
-    payload: name
+    payload: {
+      title: deskName.title,
+      id: deskName.deskId
+    }
   }
 }

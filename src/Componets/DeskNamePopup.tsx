@@ -5,10 +5,12 @@ import { changeDeskName } from '../Redux/acion';
 
 interface DeskNamePopupProps {
   open: boolean,
+  deskId: number,
   onClose: () => void,
-  changeDeskName: (name: string) => object
+  // сделать type
+  changeDeskName: (deskName: object) => object
 }
-const DeskNamePopup: React.FC<DeskNamePopupProps> = ({open, onClose, changeDeskName}) => {
+const DeskNamePopup: React.FC<DeskNamePopupProps> = ({open, deskId, onClose, changeDeskName}) => {
   const [inputValue, setInputValue] = React.useState('');
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) : void => {
@@ -17,7 +19,11 @@ const DeskNamePopup: React.FC<DeskNamePopupProps> = ({open, onClose, changeDeskN
 
   const handleClose = () => {
     if (inputValue !== '') {
-      changeDeskName(inputValue)
+      const newName = {
+        title: inputValue,
+        deskId
+      }
+      changeDeskName(newName)
     }
     setInputValue('');
     onClose()

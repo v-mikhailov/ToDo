@@ -1,7 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './App.scss';
-import Desks from './Componets/Desk';
+import Desk from './Componets/Desk';
 import Desk2 from './routerTest/Desk2';
 import Desk3 from './routerTest/Desk3';
 
@@ -13,13 +13,13 @@ function App() {
       <div className="page-container">
         <Switch>
           <Route exact path="/">
-            <Desks />
+            <Desk />
           </Route>
           <Route path="/desk2">
-            <Desk2 />
+            <Desk deskId={2} />
           </Route>
           <Route path="/desk3">
-            <Desk3 />
+            <Desk deskId={3}/>
           </Route>
         </Switch>
 
