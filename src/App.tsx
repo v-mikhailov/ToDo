@@ -1,31 +1,39 @@
 import React from 'react';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { connect } from 'react-redux'
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 import Desk from './Componets/Desk';
-import Desk2 from './routerTest/Desk2';
-import Desk3 from './routerTest/Desk3';
+import { DeskInterface } from './Interfaces/interfaces';
 
+interface AppProps {
+  desks: DeskInterface[]
+}
 
-
-function App() {
+const App : React.FC<AppProps> = ({desks}) => {
   return (
     <Router>
       <div className="page-container">
         <Switch>
-          <Route exact path="/">
-            <Desk />
-          </Route>
-          <Route path="/desk2">
-            <Desk deskId={2} />
-          </Route>
-          <Route path="/desk3">
-            <Desk deskId={3}/>
-          </Route>
+          {
+            desks.map((desk : DeskInterface) => {
+              return (
+                <Route path={`/desk/${desk.id}`}>
+                  <Desk deskId={desk.id}/>
+                </Route>
+              )
+            })
+          }
+          <Redirect from='/' to={`/desk/${desks[0].id}`}/> 
         </Switch>
-
       </div>
     </Router>
   );
 }
 
-export default App;
+const mapStateToProps = (state: any) => {
+  return {
+    desks: state.desks.desks
+  }
+}
+
+export default connect(mapStateToProps)(App);

@@ -11,9 +11,9 @@ interface DeskProps {
 
 const Desk : React.FC<DeskProps>= ({desks, deskId = 1}) => {
 
-  const findTitle = (desks: any) => {
+  const findTitle = (desks: DeskInterface[]) => {
     const currentDesk = desks.find((desk: DeskInterface) =>(desk.id === deskId));
-    return currentDesk.title
+    return currentDesk!.title
   }
 
   return (
@@ -21,10 +21,8 @@ const Desk : React.FC<DeskProps>= ({desks, deskId = 1}) => {
       <Header 
         deskName={findTitle(desks)}
         deskId={deskId}
-        />
-      <DeskContainer 
-        deskId={deskId}
       />
+      <DeskContainer deskId={deskId} />
     </React.Fragment>
   )
 }

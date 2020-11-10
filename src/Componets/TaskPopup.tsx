@@ -4,7 +4,7 @@ import { IconButton, Divider, Typography, Dialog, Toolbar, Box, DialogTitle, Tex
 import WhatshotOutlinedIcon from '@material-ui/icons/WhatshotOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
 import { TaskInterface, ColumnInterface } from '../Interfaces/interfaces';
-import { deleteTask } from '../Redux/acion';
+import { deleteTask, closeTask } from '../Redux/acion';
 import MoveToCard from './MoveToCard';
 
 
@@ -13,14 +13,21 @@ interface dialogPopupProps {
     isOpen: boolean,
     task: TaskInterface | null
   },
+  columns: ColumnInterface[],
   deleteTask: (taskId: number) => object,
-  columns: ColumnInterface[]
+  closeTask: () => object
 } 
 
-const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, deleteTask, columns}) => {
-
+const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, columns,  deleteTask, closeTask}) => {
   const handleDeleteClick = (event: React.MouseEvent<HTMLElement>) => {
     deleteTask(fullTask.task!.id);
+  }
+
+  const handleClick = (event: any) => {
+
+    if (event.target.className === 'MuiDialog-container MuiDialog-scrollPaper') {
+      closeTask();
+    }
   }
 
   return (
@@ -32,6 +39,7 @@ const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, deleteTask, columns}) 
             fullWidth={true}
             maxWidth='sm'
             className='dialog'
+            onClick={handleClick}
           >
             <Toolbar>
               <Box>
@@ -101,12 +109,20 @@ const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, deleteTask, columns}) 
           </Dialog>
         )
       }
-
     </React.Fragment>
   )
 }
 
 const mapDispatchToProps = {
-  deleteTask
+  deleteTask,
+  closeTask
 }
-export default connect(null, mapDispatchToProps)(TaskPopup);
+
+const mapStateToProps = (state: any) => {
+  return {
+    fullTask: state.tasks.openedTask,
+    columns: state.columns.columns,
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(TaskPopup);

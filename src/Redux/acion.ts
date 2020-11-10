@@ -1,5 +1,5 @@
-import { CREATE_TASK, DELETE_TASK, CHANGE_TASK_TYPE, OPEN_TASK, CLOSE_TASK, CREATE_COLUMN, CHANGE_DESK_NAME } from "./constants";
-import {  TaskInterface, TaskActionInterfaces, ColumnInterface } from '../Interfaces/interfaces';
+import { CREATE_TASK, DELETE_TASK, CHANGE_TASK_TYPE, OPEN_TASK, CLOSE_TASK, CREATE_COLUMN, CHANGE_DESK_NAME, CREATE_DESK } from "./constants";
+import {  TaskInterface, TaskActionInterfaces, ColumnInterface, DeskInterface, ColumnActionInterface, DeskActionInterface } from '../Interfaces/interfaces';
 
 export const createTask = (task: TaskInterface): TaskActionInterfaces => {
   return {
@@ -42,14 +42,22 @@ export const closeTask = (): TaskActionInterfaces => {
   }
 }
 
-export const createColumn = (column: ColumnInterface) => {
+export const createColumn = (column: ColumnInterface): ColumnActionInterface => {
   return {
     type: CREATE_COLUMN,
     payload: column
   }
 }
+
+export const createDesk = (deskData: DeskInterface): DeskActionInterface => {
+  return {
+    type: CREATE_DESK,
+    payload: deskData
+  }
+}
+
 // DeskName: DeskInterface если ничего не измениться
-export const changeDeskName = (deskName: any) => {
+export const changeDeskName = (deskName: any): DeskActionInterface => {
   return {
     type: CHANGE_DESK_NAME,
     payload: {

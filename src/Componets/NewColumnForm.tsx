@@ -6,6 +6,13 @@ import TextField from '@material-ui/core/TextField/TextField';
 import { ColumnInterface } from '../Interfaces/interfaces';
 import { createColumn } from '../Redux/acion';
 
+
+interface NewColumnFormProps {
+  columns: ColumnInterface[],
+  deskId: number,
+  createColumn: (column: ColumnInterface) => object
+}
+
 const useStyles = makeStyles((theme) => ({
   newColumnForm: {
     width: '272px',
@@ -15,35 +22,31 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-interface NewColumnFormProps {
-  prevColumns: ColumnInterface[],
-  createColumn: (column: ColumnInterface) => object
-}
-
-const NewColumnForm : React.FC<NewColumnFormProps> = ({prevColumns, createColumn}) => {
+const NewColumnForm : React.FC<NewColumnFormProps> = ({columns, deskId, createColumn}) => {
   const styles = useStyles();
   const [inputValue, setInputValue] = React.useState('')
   const [formIsExpanded, setFormIsExpanded] = React.useState(false);
 
-  const handleAccordionClick = (): void => {
+  const handleAccordionClick = () => {
     setFormIsExpanded(!formIsExpanded);
   }
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   }
 
-  const calcNextColumnId = (columns: ColumnInterface[]): number => {
+  const calcNextColumnId = (columns: ColumnInterface[]) => {
     const lastColumn = columns[columns.length - 1];
     let lastColumnId = lastColumn.id
-    return ++lastColumnId
+    return lastColumnId + 1
   }
 
-  const handeButtonClick = (): void => {
+  const handeButtonClick = () => {
     if (inputValue !== '') {
       const newColumn = {
         title: inputValue.trim(),
-        id: calcNextColumnId(prevColumns)
+        id: calcNextColumnId(columns),
+        deskId: deskId
       }
       createColumn(newColumn);
       setInputValue('');
@@ -81,4 +84,10 @@ const mapDispatchToProps = {
   createColumn
 }
 
-export default connect(null, mapDispatchToProps)(NewColumnForm);
+const mapStateToProps = (state: any) => {
+  return {
+    columns: state.columns.columns
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(NewColumnForm);

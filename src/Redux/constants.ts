@@ -6,4 +6,5 @@ export const CLOSE_TASK = 'CLOSE_TASK';
 
 export const CREATE_COLUMN = 'CREATE_COLUMN';
 
+export const CREATE_DESK = 'CREATE_NEW_DESK';
 export const CHANGE_DESK_NAME = 'CREATE_DESK_NAME';

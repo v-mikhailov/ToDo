@@ -5,6 +5,7 @@ import EditIcon from '@material-ui/icons/Edit';
 
 import DesksListPopup from './DesksListPopup';
 import DeskNamePopup from './DeskNamePopup';
+import NewDeskFormPopup from './NewDeskFormPopup';
 
 interface HeaderProps {
   deskName: string,
@@ -14,6 +15,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
   const [desksListPopupIsOpen, setDesksListPopupIsOpen] = React.useState(false);
   const [desksNamePopupIsOpen, setDesksNamePopupIsOpen] = React.useState(false);
+  const [newDeskFormIsOpen, setNewDeskFormIsOpen] = React.useState(false);
 
   const handleDeskListPopupClickOpen = () => {
     setDesksListPopupIsOpen(true);
@@ -29,6 +31,14 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
 
   const handleDeskNamePopupClose = () => {
     setDesksNamePopupIsOpen(false);
+  }
+
+  const handleNewDeskFormClick = () => {
+    setNewDeskFormIsOpen(true);
+  }
+
+  const handleNewDeskFormClose = () => {
+    setNewDeskFormIsOpen(false);
   }
 
   return (
@@ -62,7 +72,10 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
             >
               My Desks
             </Button>
-            <IconButton color="inherit">
+            <IconButton 
+              color="inherit"
+              onClick={handleNewDeskFormClick}
+            >
               <AddIcon fontSize='large'/>
             </IconButton>
           </Box>
@@ -71,12 +84,18 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
      <DesksListPopup 
         open={desksListPopupIsOpen}
         onClose={handleDeskListPopupClose}
+        deskId={deskId}
       />
       <DeskNamePopup 
         open={desksNamePopupIsOpen}
-        deskId={deskId}
         onClose={handleDeskNamePopupClose}
+        deskId={deskId}
       />
+      <NewDeskFormPopup
+        open={newDeskFormIsOpen}
+        onClose={handleNewDeskFormClose}
+      />
+      
     </AppBar>   
   )
 }

@@ -13,7 +13,7 @@ interface MoveToCardPros  {
 
 const MoveToCard: React.FC<MoveToCardPros> = ({currentColumn, currentTaskId, changeTaskColumn}) => {
 
-  const handleMoveCardClick = (): void => {
+  const handleMoveCardClick = () => {
     changeTaskColumn(currentColumn.id, currentTaskId)
   }
 

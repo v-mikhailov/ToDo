@@ -5,15 +5,18 @@ const initialState = {
   columns: [
     {
       title: 'To Do',
-      id: 1
+      id: 1,
+      deskId: 0
     },
     {
       title: 'In progress',
-      id: 2
+      id: 2,
+      deskId: 0
     },
     {
       title: 'Done', 
-      id: 3
+      id: 3,
+      deskId: 0
     }
   ]
 }
