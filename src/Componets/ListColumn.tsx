@@ -1,12 +1,10 @@
 import React from 'react';
 import { Paper, Typography, makeStyles, Box } from '@material-ui/core';
-import { connect } from 'react-redux';
-
+import { connect, useSelector } from 'react-redux';
 import NewTaskForm from './NewTaskForm';
 import Task from './Task'
 import { TaskInterface, ColumnInterface } from '../Interfaces/interfaces';
-import { columnsReducer } from '../Redux/columnsReducer';
-
+import { RootState } from '../Redux/rootReducer';
 
 const useStyles = makeStyles((theme) => ({
   desk: {
@@ -29,14 +27,14 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ListColumnProps {
-  // Почему не ColumnInterface[]?
   columns: any,
-  // Почему не TaskInterface[]?
-  newTasks: any,
   deskId: number
 } 
 
-const ListColumn: React.FC<ListColumnProps> = ({columns, newTasks, deskId}) => {
+const ListColumn: React.FC<ListColumnProps> = ({columns, deskId}) => {
+  // Что означает ошибка TS при использованиии useSelector?
+  // const columns = useSelector((state: RootState) => state.columns.columns);
+  const newTasks = useSelector((state: RootState) => state.tasks.tasks)
   const styles = useStyles();
 
   const filteredColumns = columns.filter((column: ColumnInterface) => (column.deskId === deskId || column.deskId === 0));
@@ -80,8 +78,7 @@ const ListColumn: React.FC<ListColumnProps> = ({columns, newTasks, deskId}) => {
 
 const mapStateToProps = (state: any) => {
   return {
-    columns: state.columns.columns,
-    newTasks: state.tasks.tasks
+    columns: state.columns.columns
   }
 } 
 

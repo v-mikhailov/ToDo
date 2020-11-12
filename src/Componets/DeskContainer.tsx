@@ -25,7 +25,6 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-
 interface DeskContainerProps {
   deskId: number
 }

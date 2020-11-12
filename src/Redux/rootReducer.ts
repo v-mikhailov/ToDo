@@ -8,3 +8,5 @@ export const rootReducer = combineReducers({
   tasks: tasksReducer,
   columns: columnsReducer
 })
+
+export type RootState = ReturnType<typeof rootReducer>

@@ -1,32 +1,24 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { IconButton, Divider, Typography, Dialog, Toolbar, Box, DialogTitle, TextField, List, ListItem, ListItemText } from '@material-ui/core';
 import WhatshotOutlinedIcon from '@material-ui/icons/WhatshotOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
-import { TaskInterface, ColumnInterface } from '../Interfaces/interfaces';
 import { deleteTask, closeTask } from '../Redux/acion';
 import MoveToCard from './MoveToCard';
+import { RootState } from '../Redux/rootReducer';
 
+const TaskPopup = () => {
+  const fullTask = useSelector((state: RootState) => state.tasks.openedTask);
+  const columns = useSelector((state: RootState) => state.columns.columns);
+  const dispatch = useDispatch();
 
-interface dialogPopupProps {
-  fullTask: {
-    isOpen: boolean,
-    task: TaskInterface | null
-  },
-  columns: ColumnInterface[],
-  deleteTask: (taskId: number) => object,
-  closeTask: () => object
-} 
-
-const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, columns,  deleteTask, closeTask}) => {
-  const handleDeleteClick = (event: React.MouseEvent<HTMLElement>) => {
-    deleteTask(fullTask.task!.id);
+  const handleDeleteClick = () => {
+    dispatch(deleteTask(fullTask.task!.id));
   }
 
   const handleClick = (event: any) => {
-
     if (event.target.className === 'MuiDialog-container MuiDialog-scrollPaper') {
-      closeTask();
+      dispatch(closeTask());
     }
   }
 
@@ -113,16 +105,4 @@ const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, columns,  deleteTask, 
   )
 }
 
-const mapDispatchToProps = {
-  deleteTask,
-  closeTask
-}
-
-const mapStateToProps = (state: any) => {
-  return {
-    fullTask: state.tasks.openedTask,
-    columns: state.columns.columns,
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(TaskPopup);
+export default TaskPopup;

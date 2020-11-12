@@ -1,18 +1,19 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Dialog, DialogContent, DialogTitle, TextField, Divider, Button } from '@material-ui/core';
 import { createDesk } from '../Redux/acion';
 import { DeskInterface } from '../Interfaces/interfaces'
+import { RootState } from '../Redux/rootReducer';
 
 interface NewDeskFormPopupProps {
-  desks: DeskInterface[],
   open: boolean,
   onClose: () => void,
-  createDesk: (deskData: DeskInterface) => object
 }
 
-const NewDeskFormPopup: React.FC<NewDeskFormPopupProps> = ({desks ,open, onClose, createDesk}) => {
+const NewDeskFormPopup: React.FC<NewDeskFormPopupProps> = ({open, onClose}) => {
   const [inputValue, setInputValue] = React.useState('');
+  const desks = useSelector((state: RootState) => state.desks.desks)
+  const dispatch = useDispatch();
 
   const calcNextDeskId = (desks: DeskInterface[]) => {
     const lastDesk = desks[desks.length - 1];
@@ -31,7 +32,7 @@ const NewDeskFormPopup: React.FC<NewDeskFormPopupProps> = ({desks ,open, onClose
         title: inputValue,
         id: calcNextDeskId(desks)
       }
-      createDesk(newDesk);
+      dispatch(createDesk(newDesk));
     }
     setInputValue('');
     onClose();
@@ -68,19 +69,8 @@ const NewDeskFormPopup: React.FC<NewDeskFormPopupProps> = ({desks ,open, onClose
         </Button>
         </form>
       </DialogContent>
-
     </Dialog>
   )
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    desks: state.desks.desks
-  }
-}
-
-const mapDispatchToProps = {
-  createDesk
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewDeskFormPopup);
+export default NewDeskFormPopup;

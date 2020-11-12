@@ -1,14 +1,14 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Dialog, DialogContent, DialogTitle, Divider, List, ListItem, makeStyles } from '@material-ui/core';
 import { Link } from 'react-router-dom';
 import { DeskInterface } from '../Interfaces/interfaces';
+import { RootState } from '../Redux/rootReducer';
 
 interface DesksListPopupProps {
-  desks: DeskInterface[],
   open: boolean,
+  deskId: number,
   onClose: () => void,
-  deskId: number
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +22,8 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DesksListPopup: React.FC<DesksListPopupProps> = ({desks, open, onClose, deskId}) => {
+const DesksListPopup: React.FC<DesksListPopupProps> = ({open, deskId, onClose}) => {
+  const desks = useSelector((state: RootState) => state.desks.desks)
   const styles = useStyles();
   const handleClose = () => {
     onClose()
@@ -58,10 +59,4 @@ const DesksListPopup: React.FC<DesksListPopupProps> = ({desks, open, onClose, de
   )
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    desks: state.desks.desks
-  }
-}
-
-export default connect(mapStateToProps)(DesksListPopup);
+export default DesksListPopup;

@@ -1,16 +1,15 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Accordion, AccordionDetails, AccordionSummary, makeStyles, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField/TextField';
 
 import { ColumnInterface } from '../Interfaces/interfaces';
 import { createColumn } from '../Redux/acion';
+import { RootState } from '../Redux/rootReducer';
 
 
 interface NewColumnFormProps {
-  columns: ColumnInterface[],
   deskId: number,
-  createColumn: (column: ColumnInterface) => object
 }
 
 const useStyles = makeStyles((theme) => ({
@@ -22,7 +21,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const NewColumnForm : React.FC<NewColumnFormProps> = ({columns, deskId, createColumn}) => {
+const NewColumnForm : React.FC<NewColumnFormProps> = ({ deskId }) => {
+  const columns = useSelector((state: RootState) => state.columns.columns);
+  const dispatch = useDispatch();
   const styles = useStyles();
   const [inputValue, setInputValue] = React.useState('')
   const [formIsExpanded, setFormIsExpanded] = React.useState(false);
@@ -48,7 +49,7 @@ const NewColumnForm : React.FC<NewColumnFormProps> = ({columns, deskId, createCo
         id: calcNextColumnId(columns),
         deskId: deskId
       }
-      createColumn(newColumn);
+      dispatch(createColumn(newColumn));
       setInputValue('');
       setFormIsExpanded(false);
     }
@@ -80,14 +81,4 @@ const NewColumnForm : React.FC<NewColumnFormProps> = ({columns, deskId, createCo
   )
 }
 
-const mapDispatchToProps = {
-  createColumn
-}
-
-const mapStateToProps = (state: any) => {
-  return {
-    columns: state.columns.columns
-  }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(NewColumnForm);
+export default NewColumnForm;

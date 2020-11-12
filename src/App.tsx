@@ -1,15 +1,13 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 import Desk from './Componets/Desk';
 import { DeskInterface } from './Interfaces/interfaces';
+import { RootState } from './Redux/rootReducer';
 
-interface AppProps {
-  desks: DeskInterface[]
-}
-
-const App : React.FC<AppProps> = ({desks}) => {
+const App = () => {
+  const desks = useSelector((state : RootState) => state.desks.desks)
   return (
     <Router>
       <div className="page-container">
@@ -17,7 +15,7 @@ const App : React.FC<AppProps> = ({desks}) => {
           {
             desks.map((desk : DeskInterface) => {
               return (
-                <Route path={`/desk/${desk.id}`}>
+                <Route path={`/desk/${desk.id}`} key={desk.id}>
                   <Desk deskId={desk.id}/>
                 </Route>
               )
@@ -30,10 +28,5 @@ const App : React.FC<AppProps> = ({desks}) => {
   );
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    desks: state.desks.desks
-  }
-}
 
-export default connect(mapStateToProps)(App);
+export default App;

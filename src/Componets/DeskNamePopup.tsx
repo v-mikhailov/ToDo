@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { Dialog, DialogContent, DialogTitle, TextField, Divider, Button ,makeStyles } from '@material-ui/core';
 import { changeDeskName } from '../Redux/acion';
 
@@ -7,8 +7,6 @@ interface DeskNamePopupProps {
   open: boolean,
   deskId: number,
   onClose: () => void,
-  // сделать type
-  changeDeskName: (deskName: object) => object
 };
 
 const useStyles = makeStyles((theme) => ({
@@ -20,9 +18,10 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-const DeskNamePopup: React.FC<DeskNamePopupProps> = ({open, deskId, onClose, changeDeskName}) => {
-  const styles = useStyles()
+const DeskNamePopup: React.FC<DeskNamePopupProps> = ({open, deskId, onClose}) => {
   const [inputValue, setInputValue] = React.useState('');
+  const dispatch = useDispatch();
+  const styles = useStyles()
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
@@ -40,7 +39,7 @@ const DeskNamePopup: React.FC<DeskNamePopupProps> = ({open, deskId, onClose, cha
         title: inputValue,
         deskId
       }
-      changeDeskName(newName)
+      dispatch(changeDeskName(newName));
     }
     setInputValue('');
     onClose();
@@ -80,8 +79,4 @@ const DeskNamePopup: React.FC<DeskNamePopupProps> = ({open, deskId, onClose, cha
   )
 }
 
-const mapDispatchToProps = {
-  changeDeskName
-}
-
-export default connect(null, mapDispatchToProps)(DeskNamePopup);
+export default DeskNamePopup;

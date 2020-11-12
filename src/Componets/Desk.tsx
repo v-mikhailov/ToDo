@@ -1,15 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import Header from './Header';
 import DeskContainer from './DeskContainer';
 import { DeskInterface } from '../Interfaces/interfaces';
+import { RootState } from '../Redux/rootReducer';
 
 interface DeskProps {
-  desks: DeskInterface[], 
   deskId?: number
 }
 
-const Desk : React.FC<DeskProps>= ({desks, deskId = 1}) => {
+const Desk : React.FC<DeskProps> = ({ deskId = 1 }) => {
+  const desks = useSelector((state: RootState) => state.desks.desks)
 
   const findTitle = (desks: DeskInterface[]) => {
     const currentDesk = desks.find((desk: DeskInterface) =>(desk.id === deskId));
@@ -27,10 +28,5 @@ const Desk : React.FC<DeskProps>= ({desks, deskId = 1}) => {
   )
 }
 
-const mapStateToProps = (state: any) => {
-  return {
-    desks: state.desks.desks
-  }
-}
 
-export default connect(mapStateToProps)(Desk);
+export default Desk;

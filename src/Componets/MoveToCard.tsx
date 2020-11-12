@@ -1,5 +1,5 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ListItem, ListItemText } from '@material-ui/core';
 
 import  { ColumnInterface } from '../Interfaces/interfaces';
@@ -8,13 +8,13 @@ import { changeTaskColumn } from '../Redux/acion';
 interface MoveToCardPros  {
   currentColumn: ColumnInterface,
   currentTaskId: number,
-  changeTaskColumn: (columnId: number, taskId: number) => object
 }
 
-const MoveToCard: React.FC<MoveToCardPros> = ({currentColumn, currentTaskId, changeTaskColumn}) => {
+const MoveToCard: React.FC<MoveToCardPros> = ({currentColumn, currentTaskId}) => {
+  const dispatch = useDispatch();
 
   const handleMoveCardClick = () => {
-    changeTaskColumn(currentColumn.id, currentTaskId)
+    dispatch(changeTaskColumn(currentColumn.id, currentTaskId))
   }
 
   return (
@@ -31,8 +31,4 @@ const MoveToCard: React.FC<MoveToCardPros> = ({currentColumn, currentTaskId, cha
   )
 }
 
-const mapDispatchToProps = {
-  changeTaskColumn
-}
-
-export default connect(null, mapDispatchToProps)(MoveToCard);
+export default MoveToCard;

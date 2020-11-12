@@ -1,14 +1,11 @@
 import React from 'react';
-import { connect } from 'react-redux';
-
+import { useDispatch } from 'react-redux';
 import { FormControl, Accordion, AccordionSummary, makeStyles, AccordionDetails, TextField, Divider, Switch, FormControlLabel, Button, Paper, OutlinedInput, InputLabel } from '@material-ui/core';
-
 import { createTask } from '../Redux/acion';
 import { TaskInterface } from '../Interfaces/interfaces';
 
 
 interface NewTaskFormProps {
-  createTask: (task: TaskInterface) => object,
   columnId: number,
   deskId: number
 }
@@ -39,7 +36,8 @@ const useStyles = makeStyles((theme) => ({
 
 }));
 
-const NewTaskForm: React.FC<NewTaskFormProps> = ({columnId, deskId, createTask}) => {
+const NewTaskForm: React.FC<NewTaskFormProps> = ({columnId, deskId }) => {
+  const disptach = useDispatch();
   const styles = useStyles();
   const [formIsExpanded, setFormIsExpanded] = React.useState(false);
   const [titleInputValue, setTitleInputValue] = React.useState('');
@@ -85,7 +83,7 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({columnId, deskId, createTask})
       setDeadline('');
       setIsUrgent(false);
       setFormIsExpanded(false);
-      createTask(newTask);
+      disptach(createTask(newTask));
     } 
   }
 
@@ -162,8 +160,4 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({columnId, deskId, createTask})
   )
 }
 
-const mapDispatchToProps = {
-  createTask
-}
-
-export default connect(null, mapDispatchToProps)(NewTaskForm);
+export default NewTaskForm;
