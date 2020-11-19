@@ -27,18 +27,16 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ListColumnProps {
-  columns: any,
   deskId: number
 } 
 
-const ListColumn: React.FC<ListColumnProps> = ({columns, deskId}) => {
+const ListColumn: React.FC<ListColumnProps> = ({deskId}) => {
   // Что означает ошибка TS при использованиии useSelector?
-  // const columns = useSelector((state: RootState) => state.columns.columns);
+  const columns = useSelector((state: RootState) => state.columns.columns);
   const newTasks = useSelector((state: RootState) => state.tasks.tasks)
   const styles = useStyles();
 
   const filteredColumns = columns.filter((column: ColumnInterface) => (column.deskId === deskId || column.deskId === 0));
-
   const filterTasks = (tasks: TaskInterface[], columnId: number) => tasks.filter((task: TaskInterface) => (task.columnId === columnId && task.deskId === deskId));
 
   return (

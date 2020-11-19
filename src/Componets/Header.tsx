@@ -1,5 +1,7 @@
 import React from 'react';
-import { Grid, AppBar,  Toolbar, IconButton, Typography, Box, Button} from '@material-ui/core';
+import { Link } from 'react-router-dom';
+
+import { Grid, AppBar,  Toolbar, IconButton, Typography, Box, Button, makeStyles} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -12,7 +14,19 @@ interface HeaderProps {
   deskId: number
 }
 
+const useStyles = makeStyles(() => ({
+  apiBttn: {
+    marginRight: '15px',
+  },
+  
+  link: {
+    textDecoration: "none",
+    color: 'inherit'
+  }
+}))
+
 const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
+  const styles = useStyles();
   const [desksListPopupIsOpen, setDesksListPopupIsOpen] = React.useState(false);
   const [desksNamePopupIsOpen, setDesksNamePopupIsOpen] = React.useState(false);
   const [newDeskFormIsOpen, setNewDeskFormIsOpen] = React.useState(false);
@@ -65,6 +79,15 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
             </IconButton>
           </Toolbar>
           <Box>
+            <Link to="/api" className={styles.link}>
+              <Button 
+                variant="outlined" 
+                color="inherit"
+                className={styles.apiBttn}
+              >
+                API testing
+              </Button>
+            </Link>
             <Button 
               variant="outlined" 
               color="inherit"

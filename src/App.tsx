@@ -3,11 +3,13 @@ import { useSelector } from 'react-redux'
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './App.scss';
 import Desk from './Componets/Desk';
+import ApiPage from './Componets/API/ApiPage';
 import { DeskInterface } from './Interfaces/interfaces';
 import { RootState } from './Redux/rootReducer';
 
+
 const App = () => {
-  const desks = useSelector((state : RootState) => state.desks.desks)
+  const desks = useSelector((state : RootState) => state?.desks?.desks)
   return (
     <Router>
       <div className="page-container">
@@ -21,6 +23,9 @@ const App = () => {
               )
             })
           }
+          <Route path='/api'>
+            <ApiPage />
+          </Route>
           <Redirect from='/' to={`/desk/${desks[0].id}`}/> 
         </Switch>
       </div>
