@@ -6,6 +6,7 @@ import Desk from './Componets/Desk';
 import ApiPage from './Componets/API/ApiPage';
 import { DeskInterface } from './Interfaces/interfaces';
 import { RootState } from './Redux/rootReducer';
+import DishDetail from './Componets/API/DishDetail';
 
 
 const App = () => {
@@ -23,9 +24,8 @@ const App = () => {
               )
             })
           }
-          <Route path='/api'>
-            <ApiPage />
-          </Route>
+          <Route exact path='/api' component={ApiPage} />
+          <Route path="/api/dish/:id" component={DishDetail}/>
           <Redirect from='/' to={`/desk/${desks[0].id}`}/> 
         </Switch>
       </div>

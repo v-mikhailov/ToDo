@@ -1,30 +1,42 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
-import { Avatar, List, ListItem, ListItemAvatar, ListItemText } from '@material-ui/core';
-import ImageIcon from '@material-ui/icons/Image';
+import { makeStyles } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 
+import DishCard from './DishCard';
 import { RootState } from '../../Redux/rootReducer';
+import { getRandomDishes } from '../../Redux/API/apiAction';
 
+
+const useStyles = makeStyles(() => ({
+  gridContainer: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fill, minmax(260px, 1fr))',
+    gridGap: '2vw',
+    paddingTop: '30px'
+  }
+}));
 
 const DishList = () => {
-  const dishes = useSelector((state: RootState) => state.dishes.dishes)
+  const styles = useStyles();
+  const foundDishes = useSelector((state: RootState) => state.dishes.dishes);
+  const randomDishes = useSelector((state: RootState) => state.dishes.randomDishes);
+  const dispatch = useDispatch();
+
+  const getRandomDishList = () => {
+    dispatch(getRandomDishes())
+  }
+
   return (
-    <List>
+    <div className={styles.gridContainer}>
       {
-        dishes.map((dish: any) => {
-          return (
-            <ListItem key={dish.idMeal}>
-              <ListItemAvatar>
-                <Avatar>
-                  <ImageIcon />
-                </Avatar>
-              </ListItemAvatar>
-              <ListItemText primary={dish.strMeal} secondary={dish.strArea} />
-            </ListItem>
-          )
-        })
+        (!foundDishes.length && !randomDishes.length) && getRandomDishList()
       }
-  </List>
+      { 
+        foundDishes.length ? <DishCard dishes={foundDishes}/> :
+        randomDishes.length ? <DishCard dishes={randomDishes}/> :
+        'Ошибка'
+      }
+    </div>
   )
 }
 

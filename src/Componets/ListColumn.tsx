@@ -27,12 +27,13 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ListColumnProps {
+  columns: any,
   deskId: number
 } 
 
-const ListColumn: React.FC<ListColumnProps> = ({deskId}) => {
+const ListColumn: React.FC<ListColumnProps> = ({columns, deskId}) => {
   // Что означает ошибка TS при использованиии useSelector?
-  const columns = useSelector((state: RootState) => state.columns.columns);
+  // const columns = useSelector((state: RootState) => state.columns.columns);
   const newTasks = useSelector((state: RootState) => state.tasks.tasks)
   const styles = useStyles();
 

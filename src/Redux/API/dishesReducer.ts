@@ -1,37 +1,61 @@
-import { SEARCH_DISH_FAILURE, SEARCH_DISH_STARTED, SEARCH_DISH_SUCCESS } from "./apiConstants"
+import { API_STATUS_FAILURE, API_STATUS_STARTED, GET_CERTAIN_DISH_SUCCESS, GET_RANDOM_DISHES_SUCCESS, SEARCH_DISH_SUCCESS } from "./apiConstants"
 
-// написать интерфейс
+// почему с интерфейсом появляются ошибки?
+
+// interface initialState {
+//   loading: boolean,
+//   error: any,
+//   dishes: [],
+//   randomDishes: [],
+//   certainDish: {}
+// }
+
 const initialState = {
   loading: false,
-  isComplete: false,
   error: null,
-  dishes: []
+  dishes: [],
+  randomDishes: [],
+  certainDish: {},
 }
-
 
 export const dishesReducer = (state = initialState , action : any) => {
   switch (action.type) {
-    case SEARCH_DISH_STARTED: {
+    case API_STATUS_STARTED: {
       return {
         ...state,
         loading: true,
-        isComplete: false
       };
     }
     case SEARCH_DISH_SUCCESS: {
       return {
         ...state,
         loading: false,
-        isComplete: true,
         error: null,
-        dishes: action.payload
+        dishes: action.payload,
+        randomDishes: []
       }
     }
-    case SEARCH_DISH_FAILURE: {
+    case GET_RANDOM_DISHES_SUCCESS: {
       return {
         ...state,
         loading: false,
-        isComplete: false,
+        error: null,
+        dishes: [],
+        randomDishes: action.payload
+      }
+    }
+    case GET_CERTAIN_DISH_SUCCESS: {
+      return {
+        ...state,
+        loading: false,
+        error: null,
+        certainDish: action.payload
+      }
+    }
+    case API_STATUS_FAILURE: {
+      return {
+        ...state,
+        loading: false,
         error: action.payload
       }
     }

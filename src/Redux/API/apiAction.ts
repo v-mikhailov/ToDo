@@ -1,23 +1,50 @@
 import axios from 'axios';
-import { SEARCH_DISH_FAILURE, SEARCH_DISH_STARTED, SEARCH_DISH_SUCCESS } from './apiConstants';
+import { GET_RANDOM_DISHES_SUCCESS, API_STATUS_FAILURE, API_STATUS_STARTED, SEARCH_DISH_SUCCESS, GET_CERTAIN_DISH_SUCCESS } from './apiConstants';
 
-const API_ENDPOINT ='https://www.themealdb.com/api/json/v1/1/';
-const API_SEARCH_MEAL = 'search.php?s=';
+const API_KEY = '9973533';
+const API_ENDPOINT =`https://www.themealdb.com/api/json/v2/${API_KEY}/`;
+const API_SEARCH_DISH = 'search.php?s=';
+const API_RANDOM_DISHES = 'randomselection.php';
+const CERTAIN_DISH = 'lookup.php?i='
 
 
 export const searchDishes = (inputValue: any) => {
   // не понимаю эту магию. Откуда берется dispatch, который вовзращает searchDishes()?
   return (dispatch: any) => {
-    dispatch(searchDishStarted())
-
-    axios.get(`${API_ENDPOINT}${API_SEARCH_MEAL}${inputValue}`)
+    dispatch(apiStatusStarted());
+    axios.get(`${API_ENDPOINT}${API_SEARCH_DISH}${inputValue}`)
       .then((result: any) => {
         setTimeout(() => {
           dispatch(searchDishSuccess(result.data.meals))
-        }, 1000)
+        }, 500)
       })
       .catch(err => {
-        dispatch(searchDishFailure(err.message))
+        dispatch(apiStatusFailure(err.message))
+      })
+  }
+}
+
+export const getRandomDishes = () => {
+  return (dispatch: any) => {
+    dispatch(apiStatusStarted());
+    axios.get(`${API_ENDPOINT}${API_RANDOM_DISHES}`)
+      .then((result: any) => {
+        dispatch(getRandomDishesSuccess(result.data.meals))
+      })
+      .catch(err => {
+        dispatch(apiStatusFailure(err.message))
+      })
+  } 
+}
+
+export const getCertainDish = (dishId : string) => {
+  return (dispatch: any) => {
+    axios.get(`${API_ENDPOINT}${CERTAIN_DISH}${dishId}`)
+      .then((result: any) => {
+        dispatch(getCertainDishSuccess(result.data.meals[0]))
+      })
+      .catch(err => {
+        dispatch(apiStatusFailure(err.message))
       })
   }
 }
@@ -27,12 +54,22 @@ const searchDishSuccess = (dishList: any) => ({
   payload: dishList
 });
 
-const searchDishStarted = () => ({
-  type: SEARCH_DISH_STARTED
+const getRandomDishesSuccess = (randomDishList: any) => ({
+  type: GET_RANDOM_DISHES_SUCCESS,
+  payload: randomDishList
 });
 
-const searchDishFailure = (error: any) => ({
-  type: SEARCH_DISH_FAILURE,
+const getCertainDishSuccess = (certainDish: any) => ({
+  type: GET_CERTAIN_DISH_SUCCESS,
+  payload: certainDish
+})
+
+const apiStatusStarted = () => ({
+  type: API_STATUS_STARTED
+});
+
+const apiStatusFailure = (error: any) => ({
+  type: API_STATUS_FAILURE,
   payload: error
 });
 
