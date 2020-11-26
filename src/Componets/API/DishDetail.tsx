@@ -13,6 +13,8 @@ const DishDetail : React.FC<DishDetail> = ({match}) => {
   const dispatch = useDispatch();
   const certainDish = useSelector((state: RootState) => state.dishes.certainDish)
 
+
+  // так норм делать?
   const findIngredients = () => {
     const ingredientsArr = []
     for (let key in certainDish) {

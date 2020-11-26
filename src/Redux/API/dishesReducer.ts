@@ -1,4 +1,4 @@
-import { API_STATUS_FAILURE, API_STATUS_STARTED, GET_CERTAIN_DISH_SUCCESS, GET_RANDOM_DISHES_SUCCESS, SEARCH_DISH_SUCCESS } from "./apiConstants"
+import { API_STATUS_FAILURE, API_STATUS_STARTED, GET_CERTAIN_DISH_SUCCESS, GET_RANDOM_DISHES_SUCCESS, SEARCH_DISH_SUCCESS, GET_CATEGORIES, GET_AREA_LIST, API_SEARCH_BY_AREA_SUCCESS, API_SEARCH_BY_CATEGORY_SUCCESS } from "./apiConstants"
 
 // почему с интерфейсом появляются ошибки?
 
@@ -7,7 +7,11 @@ import { API_STATUS_FAILURE, API_STATUS_STARTED, GET_CERTAIN_DISH_SUCCESS, GET_R
 //   error: any,
 //   dishes: [],
 //   randomDishes: [],
-//   certainDish: {}
+//   certainDish: {},
+//   categories: [],
+//   areaList: [],
+//   currentCategory: [],
+//   currentArea: []
 // }
 
 const initialState = {
@@ -16,6 +20,10 @@ const initialState = {
   dishes: [],
   randomDishes: [],
   certainDish: {},
+  categories: [],
+  areaList: [],
+  dishesByCategory: [],
+  dishesByArea: []
 }
 
 export const dishesReducer = (state = initialState , action : any) => {
@@ -31,8 +39,10 @@ export const dishesReducer = (state = initialState , action : any) => {
         ...state,
         loading: false,
         error: null,
+        randomDishes: [],
+        dishesByArea: [],
+        dishesByCategory: [],
         dishes: action.payload,
-        randomDishes: []
       }
     }
     case GET_RANDOM_DISHES_SUCCESS: {
@@ -41,6 +51,9 @@ export const dishesReducer = (state = initialState , action : any) => {
         loading: false,
         error: null,
         dishes: [],
+        dishesByCategory: [],
+        dishesByArea: [],
+        certainDish: {},
         randomDishes: action.payload
       }
     }
@@ -52,11 +65,49 @@ export const dishesReducer = (state = initialState , action : any) => {
         certainDish: action.payload
       }
     }
+    case GET_CATEGORIES: {
+      return {
+        ...state,
+        categories: action.payload,
+        error: null,
+      }
+    }
+    case GET_AREA_LIST: {
+      return {
+        ...state,
+        areaList: action.payload,
+        error: null
+      }
+    }
     case API_STATUS_FAILURE: {
       return {
         ...state,
         loading: false,
         error: action.payload
+      }
+    }
+    case API_SEARCH_BY_AREA_SUCCESS: {
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        dishes: [],
+        certainDish: {},
+        dishesByCategory: [],
+        randomDishes: [],
+        dishesByArea: action.payload
+      }
+    }
+    case API_SEARCH_BY_CATEGORY_SUCCESS: {
+      return {
+        ...state,
+        error: null,
+        loading: false,
+        dishes: [],
+        certainDish: {},
+        randomDishes: [],
+        dishesByArea: [],
+        dishesByCategory: action.payload
       }
     }
     

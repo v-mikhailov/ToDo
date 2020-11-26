@@ -5,6 +5,7 @@ import { Container, CircularProgress } from '@material-ui/core';
 
 import DishList from "./DishList"
 import SearchDishForm from './SeacrhDishForm';
+import SearchBy from './SearchBy';
 import { RootState } from '../../Redux/rootReducer';
 
 const ApiPage = () => {
@@ -16,6 +17,7 @@ const ApiPage = () => {
           To Do List
         </Link>
         <SearchDishForm />
+        <SearchBy />
         { loading && <CircularProgress /> }
         <DishList/>
       </Container>
