@@ -19,7 +19,7 @@ const App = () => {
             desks.map((desk : DeskInterface) => {
               return (
                 <Route path={`/desk/${desk.id}`} key={desk.id}>
-                  <Desk deskId={desk.id}/>
+                  <Desk deskId={desk.id} deskName={desk.title}/>
                 </Route>
               )
             })

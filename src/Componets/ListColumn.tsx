@@ -27,10 +27,11 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface ListColumnProps {
+  // columns: any,
   columns: any,
   deskId: number
 } 
-
+// const ListColumn: React.FC<ListColumnProps> = ({deskId}) => {
 const ListColumn: React.FC<ListColumnProps> = ({columns, deskId}) => {
   // Что означает ошибка TS при использованиии useSelector?
   // const columns = useSelector((state: RootState) => state.columns.columns);
@@ -44,7 +45,7 @@ const ListColumn: React.FC<ListColumnProps> = ({columns, deskId}) => {
     filteredColumns.map((column: ColumnInterface) => {
       const tasks = filterTasks(newTasks, column.id);
         return(
-          <Box>
+          <Box key={column.id}>
             <Paper variant="outlined" square className={styles.desk}>
               <Typography variant="h6" className={styles.cardTitle}>
                 {column.title}

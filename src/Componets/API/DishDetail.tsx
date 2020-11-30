@@ -11,21 +11,9 @@ interface DishDetail {
 
 const DishDetail : React.FC<DishDetail> = ({match}) => {
   const dispatch = useDispatch();
-  const certainDish = useSelector((state: RootState) => state.dishes.certainDish)
-
-
-  // так норм делать?
-  const findIngredients = () => {
-    const ingredientsArr = []
-    for (let key in certainDish) {
-      if (key.includes('strIngredient')) {
-        if (certainDish[key]) {
-          ingredientsArr.push(certainDish[key])
-        }
-      }
-    }
-    return ingredientsArr
-  }
+  const certainDish = useSelector((state: RootState) => state.dishes.certainDish.dish);
+  const ingredients = useSelector((state: RootState) => state.dishes.certainDish.ingridients);
+  let keyCounter = 0;
 
   useEffect(() => {
     dispatch(getCertainDish(match.params.id))
@@ -47,9 +35,9 @@ const DishDetail : React.FC<DishDetail> = ({match}) => {
         </Typography>
         <List> 
           {
-            findIngredients().map((ingredient : string) => {
+            ingredients.map((ingredient : string) => {
               return (
-                <ListItem key={ingredient} dense button>
+                <ListItem key={`${ingredient}_${keyCounter++}`} dense button>
                   <ListItemIcon>
                   <Checkbox />
                   </ListItemIcon>

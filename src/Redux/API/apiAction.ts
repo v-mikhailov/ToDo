@@ -13,7 +13,6 @@ const API_SEARCH_BY_CATEGORY = 'filter.php?c=';
 
 
 export const searchDishes = (inputValue: any) => {
-  // не понимаю эту магию. Откуда берется dispatch, который вовзращает searchDishes()?
   return (dispatch: any) => {
     dispatch(apiStatusStarted());
     axios.get(`${API_ENDPOINT}${API_SEARCH_DISH}${inputValue}`)
@@ -45,7 +44,15 @@ export const getCertainDish = (dishId : string) => {
   return (dispatch: any) => {
     axios.get(`${API_ENDPOINT}${API_CERTAIN_DISH}${dishId}`)
       .then((result: any) => {
-        dispatch(getCertainDishSuccess(result.data.meals[0]))
+        const ingridients = Object.entries(result.data.meals[0])
+          .filter(([key, value]) => key.includes('strIngredient') && value)
+          .map(([key, value]) => String(value));
+        dispatch(getCertainDishSuccess(
+          {
+            dish: result.data.meals[0],
+            ingridients
+          }
+        ))
       })
       .catch(err => {
         dispatch(apiStatusFailure(err.message))
