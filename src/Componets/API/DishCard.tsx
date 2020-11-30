@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles } from '@material-ui/core';
 
 interface DishCardProps {
-  dishes: []
+  dishes: object[]
 }
 
 const useStyles = makeStyles(() => ({
@@ -25,6 +25,7 @@ const DishCard : React.FC<DishCardProps> = ({dishes}) => {
     <React.Fragment>
     {
       dishes.map((dish: any) => {
+        console.log(dish);
         return (
             <Card key={dish.idMeal} className={styles.card}>
               <CardActionArea>

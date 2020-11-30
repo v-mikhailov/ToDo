@@ -3,13 +3,13 @@ import { API_STATUS_FAILURE, API_STATUS_STARTED, GET_CERTAIN_DISH_SUCCESS, GET_R
 interface initialState {
   loading: boolean,
   error: any,
-  dishes: [],
-  randomDishes: [],
+  dishes: object[],
+  randomDishes: object[],
   certainDish: object,
-  categories: [],
-  areaList: [],
-  dishesByCategory: [],
-  dishesByArea: []
+  categories:  object[],
+  areaList:  object[],
+  dishesByCategory:  object[],
+  dishesByArea:  object[]
 }
 
 const initialState : initialState = {

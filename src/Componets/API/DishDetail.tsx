@@ -21,39 +21,45 @@ const DishDetail : React.FC<DishDetail> = ({match}) => {
 
   return (
     <div>
-      <Link to="/api">
-        Api Page
-      </Link>
-      <Typography variant="h4" gutterBottom>
-        {certainDish.strMeal}
-      </Typography>
-      <Divider /> 
-      <Container>
-        <img src={certainDish.strMealThumb} alt={`${certainDish.strMeal}`}></img>
-        <Typography variant="h6">
-          Ingredients
-        </Typography>
-        <List> 
-          {
-            ingredients.map((ingredient : string) => {
-              return (
-                <ListItem key={`${ingredient}_${keyCounter++}`} dense button>
-                  <ListItemIcon>
-                  <Checkbox />
-                  </ListItemIcon>
-                  <ListItemText  primary={ingredient} />
-                </ListItem>
-              )
-            })
-          }
-        </List>
-        <Typography variant="h6">
-          Instructions
-        </Typography>
-        <Typography variant="body1">
-          {certainDish.strInstructions}
-        </Typography>
-      </Container>
+      {
+        (certainDish && ingredients) && (
+          <React.Fragment>
+            <Link to="/api">
+              Api Page
+            </Link>
+            <Typography variant="h4" gutterBottom>
+              {certainDish.strMeal}
+            </Typography>
+            <Divider /> 
+            <Container>
+              <img src={certainDish.strMealThumb} alt={`${certainDish.strMeal}`}></img>
+              <Typography variant="h6">
+                Ingredients
+              </Typography>
+              <List> 
+                {
+                  ingredients.map((ingredient : string) => {
+                    return (
+                      <ListItem key={`${ingredient}_${keyCounter++}`} dense button>
+                        <ListItemIcon>
+                        <Checkbox />
+                        </ListItemIcon>
+                        <ListItemText  primary={ingredient} />
+                      </ListItem>
+                    )
+                  })
+                }
+              </List>
+              <Typography variant="h6">
+                Instructions
+              </Typography>
+              <Typography variant="body1">
+                {certainDish.strInstructions}
+              </Typography>
+            </Container>
+          </React.Fragment>
+        )
+      }
     </div>
   )
 }
