@@ -24,8 +24,7 @@ const DishCard : React.FC<DishCardProps> = ({dishes}) => {
   return (
     <React.Fragment>
     {
-      dishes.map((dish: any) => {
-        console.log(dish);
+      dishes.map((dish: object) => {
         return (
             <Card key={dish.idMeal} className={styles.card}>
               <CardActionArea>
