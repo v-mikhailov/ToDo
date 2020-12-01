@@ -1,16 +1,17 @@
 import { API_STATUS_FAILURE, API_STATUS_STARTED, GET_CERTAIN_DISH_SUCCESS, GET_RANDOM_DISHES_SUCCESS, SEARCH_DISH_SUCCESS, GET_CATEGORIES, GET_AREA_LIST, API_SEARCH_BY_AREA_SUCCESS, API_SEARCH_BY_CATEGORY_SUCCESS } from "./apiConstants"
 import { DishActionInterfaces } from '../../Interfaces/apiInterfaces';
+import { DishInterface } from '../../Interfaces/apiInterfaces';
 
 interface initialState {
   loading: boolean,
   error: any,
-  dishes: object[],
-  randomDishes: object[],
-  certainDish: object,
+  dishes: DishInterface[],
+  randomDishes: DishInterface[],
+  certainDish: any,
   categories:  string[],
   areaList:  string[],
-  dishesByCategory:  object[],
-  dishesByArea:  object[]
+  dishesByCategory:  DishInterface[],
+  dishesByArea:  DishInterface[]
 }
 
 const initialState : initialState = {

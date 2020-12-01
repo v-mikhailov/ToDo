@@ -1,11 +1,13 @@
 import { GET_CERTAIN_DISH_SUCCESS, GET_RANDOM_DISHES_SUCCESS, SEARCH_DISH_SUCCESS, GET_CATEGORIES, GET_AREA_LIST, API_SEARCH_BY_AREA_SUCCESS, API_SEARCH_BY_CATEGORY_SUCCESS, API_STATUS_STARTED, API_STATUS_FAILURE } from '../Redux/API/apiConstants';
 
+type recipe = string;
+
 export interface DishInterface {
   idMeal: string,
   strArea: string,
   strMeal: string,
   strMealThumb: string,
-  strInstructions? : string,
+  strInstructions? : recipe,
   ingridients? : string[]
 }
 
