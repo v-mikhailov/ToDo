@@ -5,6 +5,7 @@ export const createDishObj = (apiDataArr: object[]) => {
       idMeal: apiDish.idMeal,
       strArea: apiDish.strArea,
       strMeal: apiDish.strMeal,
+      strCategory: apiDish.strCategory,
       strMealThumb: apiDish.strMealThumb,
     }
   })
@@ -18,6 +19,7 @@ export const createDishDetailObj = (apiDataObj: any) => {
     idMeal: apiDataObj.idMeal,
     strArea: apiDataObj.strArea,
     strMeal: apiDataObj.strMeal,
+    strCategory: apiDataObj.strCategory,
     strMealThumb: apiDataObj.strMealThumb,
     strInstructions: apiDataObj.strInstructions,
     ingridients

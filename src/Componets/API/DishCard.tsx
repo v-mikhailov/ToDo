@@ -1,10 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles } from '@material-ui/core';
-import { DishInterface  } from '../../Interfaces/apiInterfaces';
+import { DishInterface } from '../../Interfaces/apiInterfaces';
 
 interface DishCardProps {
-  dishes: object[]
+  dishes: DishInterface[]
 }
 
 const useStyles = makeStyles(() => ({
@@ -25,7 +25,7 @@ const DishCard : React.FC<DishCardProps> = ({dishes}) => {
   return (
     <React.Fragment>
     {
-      dishes.map((dish: any) => {
+      dishes.map((dish: DishInterface) => {
         return (
             <Card key={dish.idMeal} className={styles.card}>
               <CardActionArea>

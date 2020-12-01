@@ -6,6 +6,7 @@ export interface DishInterface {
   idMeal: string,
   strArea: string,
   strMeal: string,
+  strCategory: string,
   strMealThumb: string,
   strInstructions? : recipe,
   ingridients? : string[]
