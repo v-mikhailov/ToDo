@@ -11,8 +11,8 @@ interface DishDetail {
 
 const DishDetail : React.FC<DishDetail> = ({match}) => {
   const dispatch = useDispatch();
-  const certainDish = useSelector((state: RootState) => state.dishes.certainDish.dish);
-  const ingredients = useSelector((state: RootState) => state.dishes.certainDish.ingridients);
+  const certainDish = useSelector((state: RootState) => state.dishes.certainDish);
+  const ingridients = useSelector((state: RootState) => state.dishes.certainDish.ingridients)
   let keyCounter = 0;
 
   useEffect(() => {
@@ -22,7 +22,7 @@ const DishDetail : React.FC<DishDetail> = ({match}) => {
   return (
     <div>
       {
-        (certainDish && ingredients) && (
+        (certainDish && ingridients) && (
           <React.Fragment>
             <Link to="/api">
               Api Page
@@ -38,7 +38,7 @@ const DishDetail : React.FC<DishDetail> = ({match}) => {
               </Typography>
               <List> 
                 {
-                  ingredients.map((ingredient : string) => {
+                  ingridients.map((ingredient : string) => {
                     return (
                       <ListItem key={`${ingredient}_${keyCounter++}`} dense button>
                         <ListItemIcon>

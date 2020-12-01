@@ -38,14 +38,14 @@ const CategoriesList = () => {
     <div>
       <ul className={styles.list}>
       {
-        categories.map((category: any) => {
+        categories.map((category: string) => {
           return (
             <li 
               className={styles.li} 
-              key={category.strCategory}
+              key={category}
               onClick={handleClick}
             >
-              {category.strCategory}
+              {category}
             </li>
           )
         })

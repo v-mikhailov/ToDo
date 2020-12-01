@@ -1,4 +1,5 @@
 import { API_STATUS_FAILURE, API_STATUS_STARTED, GET_CERTAIN_DISH_SUCCESS, GET_RANDOM_DISHES_SUCCESS, SEARCH_DISH_SUCCESS, GET_CATEGORIES, GET_AREA_LIST, API_SEARCH_BY_AREA_SUCCESS, API_SEARCH_BY_CATEGORY_SUCCESS } from "./apiConstants"
+import { DishActionInterfaces } from '../../Interfaces/apiInterfaces';
 
 interface initialState {
   loading: boolean,
@@ -6,8 +7,8 @@ interface initialState {
   dishes: object[],
   randomDishes: object[],
   certainDish: object,
-  categories:  object[],
-  areaList:  object[],
+  categories:  string[],
+  areaList:  string[],
   dishesByCategory:  object[],
   dishesByArea:  object[]
 }
@@ -24,7 +25,7 @@ const initialState : initialState = {
   dishesByArea: []
 }
 
-export const dishesReducer = (state = initialState , action : any) => {
+export const dishesReducer = (state = initialState , action: DishActionInterfaces) => {
   switch (action.type) {
     case API_STATUS_STARTED: {
       return {

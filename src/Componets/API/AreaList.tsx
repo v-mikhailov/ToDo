@@ -37,14 +37,14 @@ const AreaList = () => {
   return (
     <ul className={styles.list}>
       {
-        areaList.map((area: any) => {
+        areaList.map((area: string) => {
           return (
             <li 
               className={styles.li}
-              key={area.strArea}
+              key={area}
               onClick={handleClick}
             >
-              {area.strArea}
+              {area}
             </li>
           )
         })
