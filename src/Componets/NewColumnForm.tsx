@@ -1,10 +1,16 @@
 import React from 'react';
-import { connect } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Accordion, AccordionDetails, AccordionSummary, makeStyles, Button } from '@material-ui/core';
 import TextField from '@material-ui/core/TextField/TextField';
 
 import { ColumnInterface } from '../Interfaces/interfaces';
 import { createColumn } from '../Redux/acion';
+import { RootState } from '../Redux/rootReducer';
+
+
+interface NewColumnFormProps {
+  deskId: number,
+}
 
 const useStyles = makeStyles((theme) => ({
   newColumnForm: {
@@ -15,37 +21,35 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-interface NewColumnFormProps {
-  prevColumns: ColumnInterface[],
-  createColumn: (column: ColumnInterface) => object
-}
-
-const NewColumnForm : React.FC<NewColumnFormProps> = ({prevColumns, createColumn}) => {
+const NewColumnForm : React.FC<NewColumnFormProps> = ({ deskId }) => {
+  const columns = useSelector((state: RootState) => state.columns.columns);
+  const dispatch = useDispatch();
   const styles = useStyles();
   const [inputValue, setInputValue] = React.useState('')
   const [formIsExpanded, setFormIsExpanded] = React.useState(false);
 
-  const handleAccordionClick = (): void => {
+  const handleAccordionClick = () => {
     setFormIsExpanded(!formIsExpanded);
   }
 
-  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
+  const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(event.target.value);
   }
 
-  const calcNextColumnId = (columns: ColumnInterface[]): number => {
+  const calcNextColumnId = (columns: ColumnInterface[]) => {
     const lastColumn = columns[columns.length - 1];
     let lastColumnId = lastColumn.id
-    return ++lastColumnId
+    return lastColumnId + 1
   }
 
-  const handeButtonClick = (): void => {
+  const handeButtonClick = () => {
     if (inputValue !== '') {
       const newColumn = {
         title: inputValue.trim(),
-        id: calcNextColumnId(prevColumns)
+        id: calcNextColumnId(columns),
+        deskId: deskId
       }
-      createColumn(newColumn);
+      dispatch(createColumn(newColumn));
       setInputValue('');
       setFormIsExpanded(false);
     }
@@ -77,8 +81,4 @@ const NewColumnForm : React.FC<NewColumnFormProps> = ({prevColumns, createColumn
   )
 }
 
-const mapDispatchToProps = {
-  createColumn
-}
-
-export default connect(null, mapDispatchToProps)(NewColumnForm);
+export default NewColumnForm;

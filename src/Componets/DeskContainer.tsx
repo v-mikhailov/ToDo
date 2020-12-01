@@ -1,12 +1,10 @@
 import React from 'react';
-import { connect, ConnectedProps } from 'react-redux';
 import { Container, Box, makeStyles } from '@material-ui/core';
 
 import ListColumn from './ListColumn';
 import TaskPopup from './TaskPopup';
 import NewColumnForm from './NewColumnForm';
-import { ColumnInterface, TaskInterface, RootState } from '../Interfaces/interfaces';
-import { closeTask } from '../Redux/acion';
+
 
 const useStyles = makeStyles((theme) => ({
   container: {
@@ -27,60 +25,26 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-export type PropsFromRedux = ConnectedProps<typeof connector>;
+interface DeskContainerProps {
+  deskId: number
+}
 
-const DeskContainer : React.FC<PropsFromRedux> = ({newTasks , columns, openedTask, closeTask}) => {
+const DeskContainer : React.FC<DeskContainerProps> = ({deskId}) => {
   const styles = useStyles();
-  const filterTasks = (tasks: TaskInterface[], columnId: number) => tasks.filter((task: TaskInterface) => task.columnId === columnId);
-  const handleClick = (event: any) => {
-    if (event.target.className === 'MuiDialog-container MuiDialog-scrollPaper') {
-      closeTask();
-    }
-  }
 
   return (
     <Container className={styles.container}>
       <div className={styles.columnsContainer}>
-        <Box 
-          className={styles.deskContainer}
-          onClick={handleClick}
-        >
-          {
-            columns.map((column: ColumnInterface) => {
-              return (
-                <ListColumn
-                  key={column.id}
-                  columnData={column} 
-                  tasks={filterTasks(newTasks, column.id)}
-                />
-              )
-            })
-          }
-          <TaskPopup 
-            fullTask={openedTask}
-            columns={columns}
-          />    
+        <Box className={styles.deskContainer}>
+          <ListColumn deskId={deskId}/>
+          <TaskPopup/>
         </Box>
         <div>
-          <NewColumnForm prevColumns={columns}/>
+          <NewColumnForm deskId={deskId}/>
         </div>
       </div>
-    </Container>
+    </Container> 
   )
 }
 
-const mapStateToProps = (state: RootState) => {
-  return {
-    newTasks: state.tasks.tasks,
-    openedTask: state.tasks.openedTask,
-    columns: state.columns.columns,
-  }
-}
-
-const mapDispatchToProps = {
-  closeTask
-}
-
-const connector = connect(mapStateToProps, mapDispatchToProps);
-
-export default connector(DeskContainer);
+export default DeskContainer;

@@ -1,12 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux'
+import { useDispatch } from 'react-redux'
 import { makeStyles, ListItem, ListItemText } from '@material-ui/core';
-
 import { TaskInterface } from '../Interfaces/interfaces';
 import { openTask  } from '../Redux/acion';
 
 interface TaskProps {
-  openTask: (task: TaskInterface) => object,
   data: TaskInterface,
 }
 
@@ -17,11 +15,12 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Task: React.FC<TaskProps> = ({ openTask, data}) => {
+const Task: React.FC<TaskProps> = ({ data }) => {
+  const dispatch = useDispatch();
   const styles = useStyles();
 
   const handleTaskClick = (event: React.MouseEvent) => {
-    openTask(data);
+    dispatch(openTask(data));
   }
 
   return(
@@ -35,8 +34,4 @@ const Task: React.FC<TaskProps> = ({ openTask, data}) => {
   )
 }
 
-const mapDispatchToProps = {
-    openTask
-}
-
-export default connect(null, mapDispatchToProps)(Task);
+export default Task;

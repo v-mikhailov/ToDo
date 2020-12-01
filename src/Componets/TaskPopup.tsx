@@ -1,26 +1,25 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import { IconButton, Divider, Typography, Dialog, Toolbar, Box, DialogTitle, TextField, List, ListItem, ListItemText, Popover } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
+import { IconButton, Divider, Typography, Dialog, Toolbar, Box, DialogTitle, TextField, List, ListItem, ListItemText } from '@material-ui/core';
 import WhatshotOutlinedIcon from '@material-ui/icons/WhatshotOutlined';
 import DeleteOutlineOutlinedIcon from '@material-ui/icons/DeleteOutlineOutlined';
-import { TaskInterface, ColumnInterface } from '../Interfaces/interfaces';
-import { deleteTask } from '../Redux/acion';
+import { deleteTask, closeTask } from '../Redux/acion';
 import MoveToCard from './MoveToCard';
+import { RootState } from '../Redux/rootReducer';
 
+const TaskPopup = () => {
+  const fullTask = useSelector((state: RootState) => state.tasks.openedTask);
+  const columns = useSelector((state: RootState) => state.columns.columns);
+  const dispatch = useDispatch();
 
-interface dialogPopupProps {
-  fullTask: {
-    isOpen: boolean,
-    task: TaskInterface | null
-  },
-  deleteTask: (taskId: number) => object,
-  columns: ColumnInterface[]
-} 
+  const handleDeleteClick = () => {
+    dispatch(deleteTask(fullTask.task!.id));
+  }
 
-const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, deleteTask, columns}) => {
-
-  const handleDeleteClick = (event: React.MouseEvent<HTMLElement>) => {
-    deleteTask(fullTask.task!.id);
+  const handleClick = (event: any) => {
+    if (event.target.className === 'MuiDialog-container MuiDialog-scrollPaper') {
+      dispatch(closeTask());
+    }
   }
 
   return (
@@ -32,6 +31,7 @@ const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, deleteTask, columns}) 
             fullWidth={true}
             maxWidth='sm'
             className='dialog'
+            onClick={handleClick}
           >
             <Toolbar>
               <Box>
@@ -101,12 +101,8 @@ const TaskPopup: React.FC<dialogPopupProps> = ({fullTask, deleteTask, columns}) 
           </Dialog>
         )
       }
-
     </React.Fragment>
   )
 }
 
-const mapDispatchToProps = {
-  deleteTask
-}
-export default connect(null, mapDispatchToProps)(TaskPopup);
+export default TaskPopup;
