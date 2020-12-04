@@ -10,6 +10,9 @@ import { CategoryInterface } from '../../Interfaces/apiInterfaces';
 const useStyles = makeStyles((theme: Theme) => ({
   container: {
     width: '80%',
+    [theme.breakpoints.only('xs')]: {
+      width: '100%'
+    },
   },
   categoryBlock: {
     display: 'flex',
@@ -19,7 +22,11 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   img: {
     width: '72px',
-    height: '72px'
+    height: '72px',
+    [theme.breakpoints.only('xs')]: {
+      width: '48px',
+      height: '48px',
+    },
   },
 }));
 
@@ -41,8 +48,11 @@ const CategoriesList = () => {
     <div className={styles.container}>
       {categories && (
         <Carousel
+          breakPoints={[
+            {width: 320, itemsToShow: 3},
+            {width: 600, itemsToShow: 6}
+          ]}
           itemPadding={[0, 15]}
-          itemsToShow={6}
           pagination={false}
         >
           {

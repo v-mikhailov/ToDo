@@ -9,7 +9,10 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
   name: {
     color: theme.palette.warning.dark,
-    fontWeight: 'bold'
+    fontWeight: 'bold',
+    [theme.breakpoints.only('xs')]: {
+      fontSize: '16px'
+    },
   },
   toolBar: {
     display: 'flex',
@@ -46,7 +49,7 @@ const Header = () => {
         </Typography>
       </Link>
       <SearchDishForm />
-      <Link to="/" className={styles.link}>
+      {/* <Link to="/" className={styles.link}>
         <Button 
           variant="outlined" 
           color="inherit"
@@ -54,7 +57,7 @@ const Header = () => {
         >
           To Do List
         </Button>
-      </Link>
+      </Link> */}
       
     </Toolbar>
   </AppBar>

@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Container, Grid, makeStyles, Switch, Typography } from '@material-ui/core';
+import { Container, Grid, makeStyles, Switch, Theme, Typography } from '@material-ui/core';
 
 import CategoriesList from './CategoriesList';
 import AreaList from './AreaList';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     width: 'auto',
     padding: '20px 0 35px 0',
@@ -12,8 +12,12 @@ const useStyles = makeStyles(() => ({
   },
   menuContainer: {
     display: 'flex',
+    flexDirection: 'column',
     justifyContent: 'space-between',
     alignItems: 'center',
+    [theme.breakpoints.up('md')]: {
+      flexDirection: 'row'
+    },
   }
 }));
 

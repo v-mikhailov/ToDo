@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { makeStyles, Typography } from '@material-ui/core';
+import { makeStyles, Theme, Typography } from '@material-ui/core';
 import { useDispatch, useSelector } from 'react-redux';
 import Carousel from 'react-elastic-carousel'
 
@@ -32,13 +32,13 @@ import Tunisia from '../../Images/tunisia-flag-icon-64.png'
 import Turkey from '../../Images/turkey-flag-icon-64.png'
 import Vietnam from '../../Images/vietnam-flag-icon-64.png'
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme: Theme) => ({
   container: {
     width: '80%',
   },
   flag: {
     width: '64px',
-    height: '43px'
+    height: '43px',
   },
   country: {
     textAlign: 'center'

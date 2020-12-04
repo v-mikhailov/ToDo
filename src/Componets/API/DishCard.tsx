@@ -35,7 +35,7 @@ const DishCard : React.FC<DishCardProps> = ({dishes}) => {
                   title={dish.strMeal}
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h6" component="h2">
+                  <Typography gutterBottom variant="subtitle2" component="h2">
                     {dish.strMeal}
                   </Typography>
                 </CardContent>

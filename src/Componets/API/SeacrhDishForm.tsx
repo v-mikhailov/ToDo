@@ -8,22 +8,33 @@ const useStyles = makeStyles((theme: Theme) => ({
   formContainer: {
     display: 'flex',
     alignItems: 'baseline',
-    width: '30%',
-    maxWidth: '300px'
+    width: 'auto',
+    maxWidth: '400px',
   },
   form: {
     display: 'flex',
     alignItems: 'center',
     border: '1px solid black',
     padding: '4px 0 4px 8px',
-    width: '80%'
+    width: '80%',
+    [theme.breakpoints.only('xs')]: {
+      padding: '2px 0 2px 4px',
+    },
   },
   iconButton: {
     padding: 4,
   },
+  input: {
+    [theme.breakpoints.only('xs')]: {
+      fontSize: '10px'
+    },
+  },
   label: {
     color: '#000',
-    marginRight: theme.spacing(1)
+    marginRight: theme.spacing(1),
+    [theme.breakpoints.only('xs')]: {
+      fontSize: '10px'
+    },
   }
 }))
 
@@ -60,6 +71,7 @@ const SearchDishForm = () => {
           fullWidth={true}
           value={inputValue}
           onChange={handleChangeInput}
+          className={styles.input}
         />
         <IconButton 
           type="submit" 

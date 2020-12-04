@@ -37,6 +37,13 @@
   margin-bottom: 8px;
 }
 
+// Carousel
+
+@media (max-width: 599px) {
+  .rec.rec-arrow {
+    display: none;
+  }
+}
 .rec.rec-arrow:disabled {
   visibility: hidden;
 }
