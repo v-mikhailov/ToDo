@@ -36,3 +36,15 @@
   padding-left: 10px;
   margin-bottom: 8px;
 }
+
+.rec.rec-arrow:disabled {
+  visibility: hidden;
+}
+
+.rec.rec-arrow:hover:enabled {
+  background-color: #ffb74d;
+}
+
+.rec.rec-item-wrapper {
+  width: auto !important
+}

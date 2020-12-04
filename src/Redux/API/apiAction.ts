@@ -1,14 +1,14 @@
 import axios from 'axios';
 import { GET_RANDOM_DISHES_SUCCESS, API_STATUS_FAILURE, API_STATUS_STARTED, SEARCH_DISH_SUCCESS, GET_CERTAIN_DISH_SUCCESS, GET_CATEGORIES, GET_AREA_LIST, API_SEARCH_BY_AREA_SUCCESS, API_SEARCH_BY_CATEGORY_SUCCESS} from './apiConstants';
-import { DishInterface } from '../../Interfaces/apiInterfaces';
-import { createDishObj, createDishDetailObj, createParamsArr} from '../../Utilities/apiUtilities';
+import { DishInterface, CategoryInterface  } from '../../Interfaces/apiInterfaces';
+import { createDishObj, createDishDetailObj, createParamsArr, createCategoriesObj} from '../../Utilities/apiUtilities';
 
 const API_KEY = '9973533';
 const API_ENDPOINT =`https://www.themealdb.com/api/json/v2/${API_KEY}/`;
 const API_SEARCH_DISH = 'search.php?s=';
 const API_RANDOM_DISHES = 'randomselection.php';
 const API_CERTAIN_DISH = 'lookup.php?i=';
-const API_CATEGORIES = 'list.php?c=list';
+const API_CATEGORIES = 'categories.php';
 const API_AREA_LIST = 'list.php?a=list';
 const API_SEARCH_BY_AREA = 'filter.php?a=';
 const API_SEARCH_BY_CATEGORY = 'filter.php?c=';
@@ -58,7 +58,7 @@ export const getCategories = () => {
   return (dispatch: any) => {
     axios.get(`${API_ENDPOINT}${API_CATEGORIES}`)
       .then((result: any) => {
-        dispatch(getCategoriesSuccess(createParamsArr(result.data.meals)))
+        dispatch(getCategoriesSuccess(createCategoriesObj(result.data.categories)))
       })
       .catch(err => {
         dispatch(apiStatusFailure(err.message))
@@ -119,7 +119,7 @@ const getCertainDishSuccess = (certainDish: DishInterface) => ({
   payload: certainDish
 })
 
-const getCategoriesSuccess = (categoriesList: string[]) => ({
+const getCategoriesSuccess = (categoriesList: CategoryInterface[]) => ({
   type: GET_CATEGORIES,
   payload: categoriesList
 })
