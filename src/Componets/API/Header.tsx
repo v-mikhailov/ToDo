@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { AppBar, Button, makeStyles, Toolbar, Typography, Theme, Box } from '@material-ui/core';
+import { AppBar, Button, makeStyles, Toolbar, Typography, Theme } from '@material-ui/core';
 import SearchDishForm from './SeacrhDishForm';
 
 const useStyles = makeStyles((theme: Theme) => ({
@@ -40,9 +40,11 @@ const Header = () => {
   return (
   <AppBar position="static" className={styles.appBar}>
     <Toolbar className={styles.toolBar}>
-      <Typography variant="h4" className={styles.name}>
-        Recipe Finder
-      </Typography>
+      <Link to="/api" className={styles.link}>
+        <Typography variant="h4" className={styles.name}>
+          Recipe Finder
+        </Typography>
+      </Link>
       <SearchDishForm />
       <Link to="/" className={styles.link}>
         <Button 

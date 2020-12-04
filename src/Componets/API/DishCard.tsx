@@ -11,7 +11,9 @@ const useStyles = makeStyles(() => ({
   card: {
     position: 'relative',
     minWidth: '265px',
-
+  },
+  link: {
+    textDecoration: "none",
   },
 }));
 
@@ -40,7 +42,7 @@ const DishCard : React.FC<DishCardProps> = ({dishes}) => {
               </CardActionArea>
               <Divider />
               <CardActions>
-                <Link to={`/api/dish/${dish.idMeal}`}>
+                <Link to={`/api/dish/${dish.idMeal}` } className={styles.link}>
                   <Button size="small" color="primary">
                     Open recipe
                   </Button>
