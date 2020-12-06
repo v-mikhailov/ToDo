@@ -13,15 +13,12 @@ const API_AREA_LIST = 'list.php?a=list';
 const API_SEARCH_BY_AREA = 'filter.php?a=';
 const API_SEARCH_BY_CATEGORY = 'filter.php?c=';
 
-
 export const searchDishes = (inputValue: string) => {
   return (dispatch: any) => {
     dispatch(apiStatusStarted());
     axios.get(`${API_ENDPOINT}${API_SEARCH_DISH}${inputValue}`)
       .then((result: any) => {
-        setTimeout(() => {
-          dispatch(searchDishSuccess(createDishObj(result.data.meals)))
-        }, 500)
+        dispatch(searchDishSuccess(createDishObj(result.data.meals)))
       })
       .catch(err => {
         dispatch(apiStatusFailure(err.message))

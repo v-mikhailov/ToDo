@@ -30,7 +30,6 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }));
 
-
 const CategoriesList = () => {
   const styles = useStyles();
   const dispatch = useDispatch();

@@ -45,15 +45,14 @@ const useStyles = makeStyles((theme: Theme) => ({
   }
 }));
 
-
 const AreaList = () => {
   const styles = useStyles();
   const dispatch = useDispatch();
-  const areaList = useSelector((state: RootState) => state.dishes.areaList);
+//   const areaList = useSelector((state: RootState) => state.dishes.areaList);
 
-  useEffect(() => {
-    dispatch(getAreaList())
-  }, [dispatch])
+//   useEffect(() => {
+//     dispatch(getAreaList())
+//   }, [dispatch])
 
   const handleClick = (event: any) => {
     dispatch(searchByArea(event.currentTarget.textContent))

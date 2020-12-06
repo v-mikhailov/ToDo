@@ -3,6 +3,10 @@ import { Link } from 'react-router-dom';
 import { AppBar, Button, makeStyles, Toolbar, Typography, Theme } from '@material-ui/core';
 import SearchDishForm from './SeacrhDishForm';
 
+interface HeaderProps {
+  isDishDetailPage: boolean
+}
+
 const useStyles = makeStyles((theme: Theme) => ({
   appBar: {
     backgroundColor: '#fff'
@@ -18,7 +22,7 @@ const useStyles = makeStyles((theme: Theme) => ({
     display: 'flex',
     justifyContent: 'space-between',
   },
-  toDoBttn: {
+  bttn: {
     color: '#000',
     marginRight: '15px',
   },
@@ -37,7 +41,7 @@ const useStyles = makeStyles((theme: Theme) => ({
   },
 }))
 
-const Header = () => {
+const Header : React.FC<HeaderProps> = ({isDishDetailPage}) => {
   const styles = useStyles();
 
   return (
@@ -48,17 +52,21 @@ const Header = () => {
           Recipe Finder
         </Typography>
       </Link>
-      <SearchDishForm />
-      {/* <Link to="/" className={styles.link}>
-        <Button 
-          variant="outlined" 
-          color="inherit"
-          className={styles.toDoBttn}
-        >
-          To Do List
-        </Button>
-      </Link> */}
-      
+     { 
+      isDishDetailPage ? (
+        <Link to="/api" className={styles.link}>
+          <Button 
+            variant="outlined" 
+            color="inherit"
+            className={styles.bttn}
+          >
+            Main page
+          </Button>
+        </Link> 
+        ):(
+          <SearchDishForm />
+        )
+      }
     </Toolbar>
   </AppBar>
   )
