@@ -8,9 +8,7 @@ interface initialState {
   dishes: DishInterface[],
   randomDishes: DishInterface[],
   certainDish: any,
-  categories: any,
-  //categories:  string[], Почему так работает? Я ведь не передаю массив строк
-  // categories:  CategoryInterface[], // А так не работает :(
+  categories:  CategoryInterface[],
   areaList:  string[],
   dishesByCategory:  DishInterface[],
   dishesByArea:  DishInterface[]
@@ -67,7 +65,7 @@ export const dishesReducer = (state = initialState , action: DishActionInterface
         certainDish: action.payload
       }
     }
-    case GET_CATEGORIES: {
+    case GET_CATEGORIES: {     
       return {
         ...state,
         categories: action.payload,

@@ -34,7 +34,7 @@ interface GetCertainDishSuccessAction {
 
 interface GetCategoriesSuccessAction {
   type: typeof GET_CATEGORIES,
-  payload: string[]
+  payload: CategoryInterface[]
 }
 
 interface GetAreaListSuccessAction {

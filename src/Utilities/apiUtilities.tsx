@@ -1,4 +1,3 @@
-
 export const createDishObj = (apiDataArr: object[]) => {
   return apiDataArr.map((apiDish: any) => {
     return {
