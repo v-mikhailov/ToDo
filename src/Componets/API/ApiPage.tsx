@@ -1,26 +1,25 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import { Container, CircularProgress } from '@material-ui/core';
+import { Container, CircularProgress, Box } from '@material-ui/core';
 
 import DishList from "./DishList"
-import SearchDishForm from './SeacrhDishForm';
 import SearchBy from './SearchBy';
+import Header from './Header';
+import Footer from './Footer';
 import { RootState } from '../../Redux/rootReducer';
 
 const ApiPage = () => {
   const loading = useSelector((state: RootState) => state.dishes.loading);
 
   return (
+    <Box >
+      <Header isDishDetailPage={false}/>
+      <SearchBy />
       <Container>
-        <Link to="/">
-          To Do List
-        </Link>
-        <SearchDishForm />
-        <SearchBy />
-        { loading && <CircularProgress /> }
-        <DishList/>
+        { loading ? <CircularProgress /> : <DishList/> }
       </Container>
+      <Footer/>
+    </Box>
   )
 }
 

@@ -6,7 +6,6 @@ import DishCard from './DishCard';
 import { RootState } from '../../Redux/rootReducer';
 import { getRandomDishes } from '../../Redux/API/apiAction';
 
-
 const useStyles = makeStyles(() => ({
   gridContainer: {
     display: 'grid',

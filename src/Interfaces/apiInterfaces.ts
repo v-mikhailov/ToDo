@@ -12,6 +12,11 @@ export interface DishInterface {
   ingridients? : string[]
 }
 
+export interface CategoryInterface {
+  strCategory: string,
+  strCategoryThumb: string
+}
+
 interface SearchDishSuccessAction {
   type: typeof SEARCH_DISH_SUCCESS,
   payload: DishInterface[]
@@ -29,7 +34,7 @@ interface GetCertainDishSuccessAction {
 
 interface GetCategoriesSuccessAction {
   type: typeof GET_CATEGORIES,
-  payload: string[]
+  payload: CategoryInterface[]
 }
 
 interface GetAreaListSuccessAction {

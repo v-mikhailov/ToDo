@@ -1,4 +1,3 @@
-
 export const createDishObj = (apiDataArr: object[]) => {
   return apiDataArr.map((apiDish: any) => {
     return {
@@ -26,9 +25,19 @@ export const createDishDetailObj = (apiDataObj: any) => {
   }
 }
 
+export const createCategoriesObj = (categoryDataArr: object[]) => {
+  return categoryDataArr.map((categoryData: any) => {
+    return {
+      strCategory: categoryData.strCategory,
+      strCategoryThumb: categoryData.strCategoryThumb
+    }
+  })
+}
+
 export const createParamsArr = (paramsObjArray: object[]) => {
-  return paramsObjArray.map((paramObj) => {
-    const [ paramStr ] = Object.values(paramObj);
-    return paramStr;
+  return paramsObjArray.filter((paramObj : any) => paramObj.strArea !== 'Unknown')
+    .map((paramObj: any) => {
+      const [ paramStr ] = Object.values(paramObj);
+      return paramStr;
   })
 }

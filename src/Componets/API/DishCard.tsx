@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles } from '@material-ui/core';
+import { Card, CardActionArea, CardMedia, CardContent, Typography, CardActions, Button, makeStyles, Divider } from '@material-ui/core';
 import { DishInterface } from '../../Interfaces/apiInterfaces';
 
 interface DishCardProps {
@@ -11,12 +11,10 @@ const useStyles = makeStyles(() => ({
   card: {
     position: 'relative',
     minWidth: '265px',
-    minHeight: '320px'
   },
-  button: {
-    position: 'absolute',
-    bottom: '8px',
-  }
+  link: {
+    textDecoration: "none",
+  },
 }));
 
 const DishCard : React.FC<DishCardProps> = ({dishes}) => {
@@ -37,20 +35,15 @@ const DishCard : React.FC<DishCardProps> = ({dishes}) => {
                   title={dish.strMeal}
                 />
                 <CardContent>
-                  <Typography gutterBottom variant="h5" component="h2">
+                  <Typography gutterBottom variant="subtitle2" component="h2">
                     {dish.strMeal}
                   </Typography>
-                  <p>
-                    Cusine: {dish.strArea}
-                  </p>
-                  <p>
-                    Category: {dish.strCategory}
-                  </p>
                 </CardContent>
               </CardActionArea>
+              <Divider />
               <CardActions>
-                <Link to={`/api/dish/${dish.idMeal}`}>
-                  <Button size="small" color="primary" className={styles.button}>
+                <Link to={`/api/dish/${dish.idMeal}` } className={styles.link}>
+                  <Button size="small" color="primary">
                     Open recipe
                   </Button>
                 </Link>
