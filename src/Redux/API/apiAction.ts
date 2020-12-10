@@ -2,8 +2,6 @@ import axios from 'axios';
 import { GET_RANDOM_DISHES_SUCCESS, API_STATUS_FAILURE, API_STATUS_STARTED, SEARCH_DISH_SUCCESS, GET_CERTAIN_DISH_SUCCESS, GET_CATEGORIES, GET_AREA_LIST, API_SEARCH_BY_AREA_SUCCESS, API_SEARCH_BY_CATEGORY_SUCCESS} from './apiConstants';
 import { DishInterface, CategoryInterface  } from '../../Interfaces/apiInterfaces';
 import { createDishObj, createDishDetailObj, createParamsArr, createCategoriesObj} from '../../Utilities/apiUtilities';
-import { Category, CategoryTwoTone } from '@material-ui/icons';
-import { arch } from 'process';
 
 const API_KEY = '9973533';
 const API_ENDPOINT =`https://www.themealdb.com/api/json/v2/${API_KEY}/`;
