@@ -79,15 +79,6 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
             </IconButton>
           </Toolbar>
           <Box>
-            <Link to="/api" className={styles.link}>
-              <Button 
-                variant="outlined" 
-                color="inherit"
-                className={styles.apiBttn}
-              >
-                API testing
-              </Button>
-            </Link>
             <Button 
               variant="outlined" 
               color="inherit"
