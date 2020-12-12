@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
-import { Grid, AppBar,  Toolbar, IconButton, Typography, Box, Button, makeStyles} from '@material-ui/core';
+import { Grid, AppBar,  Toolbar, IconButton, Typography, Box, Button, makeStyles, Theme} from '@material-ui/core';
 import AddIcon from '@material-ui/icons/Add';
 import EditIcon from '@material-ui/icons/Edit';
 
@@ -14,14 +13,35 @@ interface HeaderProps {
   deskId: number
 }
 
-const useStyles = makeStyles(() => ({
-  apiBttn: {
-    marginRight: '15px',
+const useStyles = makeStyles((theme: Theme) => ({
+  toolbar: {
+    [theme.breakpoints.down('xs')]: {
+      
+    }
   },
-  
-  link: {
-    textDecoration: "none",
-    color: 'inherit'
+  title: {
+    [theme.breakpoints.down('xs')]: {
+      width: '100%',
+      textAlign: 'center'
+    }
+  },
+  deskNameBlock: {
+    [theme.breakpoints.down('xs')]: {
+      padding: 0
+    }
+  },
+  deskName: {
+    fontSize: '24px',
+    [theme.breakpoints.down('xs')]: {
+     fontSize: '18px'
+    }
+  },
+  button: {
+    [theme.breakpoints.down('xs')]: {
+      paddingLeft: '10px',
+      paddingRight: '10px',
+      fontSize: '12px'
+     }
   }
 }))
 
@@ -57,18 +77,18 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
 
   return (
     <AppBar position="static">
-      <Toolbar className="">
+      <Toolbar className={styles.toolbar}>
         <Grid
           container
           direction="row"
           justify="space-between"
           alignItems="center"
         >
-          <Typography variant="h4">
+          <Typography variant="h4" className={styles.title}>
             To Do List
           </Typography>
-          <Toolbar>
-            <Typography variant="h5">
+          <Toolbar className={styles.deskNameBlock}>
+            <Typography className={styles.deskName}>
               {deskName}
             </Typography>
             <IconButton 
@@ -83,6 +103,7 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
               variant="outlined" 
               color="inherit"
               onClick={handleDeskListPopupClickOpen}
+              className={styles.button}
             >
               My Desks
             </Button>
@@ -95,6 +116,7 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
           </Box>
         </Grid>
      </Toolbar>
+
      <DesksListPopup 
         open={desksListPopupIsOpen}
         onClose={handleDeskListPopupClose}
@@ -109,7 +131,6 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
         open={newDeskFormIsOpen}
         onClose={handleNewDeskFormClose}
       />
-      
     </AppBar>   
   )
 }

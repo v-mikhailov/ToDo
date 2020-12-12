@@ -12,19 +12,19 @@ interface DesksListPopupProps {
 }
 
 const useStyles = makeStyles((theme: Theme) => ({
-  root: {
-    width: '200px',
-    backgroundColor: theme.palette.background.paper,
-  },
   dialogContent: {
     padding: 0,
     overflow: 'hidden',
+  },
+  contentContainer: {
+    width: '250px',
+    backgroundColor: theme.palette.background.paper,
   },
   list: {
     paddingLeft: 0,
     paddingRight: 0,
     paddingTop: theme.spacing(2),
-    paddingBottom: theme.spacing(2),
+    paddingBottom: theme.spacing(3),
   },
   infolistItem: {
    textAlign: 'center'
@@ -33,7 +33,6 @@ const useStyles = makeStyles((theme: Theme) => ({
     paddingLeft: theme.spacing(3),
     paddingRight: theme.spacing(3),
   },
-
   link: {
     textDecoration: 'none',
     color: theme.palette.text.primary
@@ -58,7 +57,7 @@ const DesksListPopup: React.FC<DesksListPopupProps> = ({open, deskId, onClose}) 
       </DialogTitle>
       <Divider />
       <DialogContent className={styles.dialogContent}>
-        <div className={styles.root}>
+        <div className={styles.contentContainer}>
           <List className={styles.list}>
             {
               desks.length <= 1 && (
@@ -67,7 +66,7 @@ const DesksListPopup: React.FC<DesksListPopupProps> = ({open, deskId, onClose}) 
                   gutters: styles.listItem,
                 }}
                 >
-                  There are no other boards
+                  There are no other desks
                 </ListItem>
               )
             }
