@@ -1,6 +1,7 @@
 import React from 'react';
 import Header from './Header';
 import DeskContainer from './DeskContainer';
+import Footer from './Footer';
 
 interface DeskProps {
   deskId?: number,
@@ -15,6 +16,7 @@ const Desk : React.FC<DeskProps> = ({ deskId = 1, deskName = 'Desk 1' }) => {
         deskId={deskId}
       />
       <DeskContainer deskId={deskId} />
+      <Footer />
     </React.Fragment>
   )
 }
