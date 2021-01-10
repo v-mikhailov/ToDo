@@ -10,7 +10,16 @@ interface DeskNamePopupProps {
 };
 
 const useStyles = makeStyles((theme) => ({
-  confirmButton: {
+  root: {
+    width: '250px'
+  },
+  textField: {
+    marginBottom: theme.spacing(2)
+  },
+  dialogContent: {
+    paddingBottom: theme.spacing(2)
+  },
+  button: {
     display: 'block',
     marginTop: theme.spacing(2),
     marginLeft: 'auto'
@@ -49,30 +58,29 @@ const DeskNamePopup: React.FC<DeskNamePopupProps> = ({open, deskId, onClose}) =>
     <Dialog
       open={open}
       onClose={handleClose}
-      maxWidth="xs"
     >
-      <DialogTitle>
+      <DialogTitle className={styles.root}>
         Desk name
       </DialogTitle>
       <Divider />
-      <DialogContent >
+      <DialogContent className={styles.dialogContent}>
         <form noValidate onSubmit={handleSubmit}>
           <TextField
             label="Enter new desk name"
             fullWidth={true}
             value={inputValue}
             onChange={handleInputChange}
+            className={styles.textField}
           />
-        <Button 
-          variant="contained" 
-          color="secondary"
-          size="small"
-          className={styles.confirmButton}
-          type="submit"
-        >
-          Rename
-        </Button>
-
+          <Button 
+            variant="contained" 
+            color="secondary"
+            size="small"
+            className={styles.button}
+            type="submit"
+          >
+            Rename
+          </Button>
         </form>
       </DialogContent>
     </Dialog>

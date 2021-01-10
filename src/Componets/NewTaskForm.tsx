@@ -14,26 +14,26 @@ const useStyles = makeStyles((theme) => ({
   form: {
     width: '272px'
   },
-
   formBackground: {
     backgroundColor: '#f5f5f5'
   },
-
   formHeading: {
     fontSize: theme.typography.pxToRem(15),
     color: theme.palette.text.secondary,
     marginLeft: 'auto',
     marginRight: 'auto'
   },
-
+  formContainer: {
+    display: 'flex',
+    flexDirection: 'column',
+    width: '100%',
+  },
   formBlock: {
     marginBottom: "10px",
   },
-
   bottomSpacing: {
     marginBottom: theme.spacing(1)
   }
-
 }));
 
 const NewTaskForm: React.FC<NewTaskFormProps> = ({columnId, deskId }) => {
@@ -97,64 +97,65 @@ const NewTaskForm: React.FC<NewTaskFormProps> = ({columnId, deskId }) => {
           <Button className={styles.formHeading}>Add new task</Button>
         </AccordionSummary>
         <Divider/>
-          <AccordionDetails >
-            <form 
-              onSubmit={handleSubmit}
-              noValidate
+        <AccordionDetails >
+          <form 
+            onSubmit={handleSubmit}
+            noValidate
+            className={styles.formContainer}
+          >
+            <FormControl
+              required={true}
+              variant="outlined"
             >
-              <FormControl
-                required={true}
-                variant="outlined"
-              >
-              <InputLabel>Enter a title for this card</InputLabel>
-              <OutlinedInput 
-                multiline={true}
-                fullWidth={true}
-                onChange={handleTitleInputChange}
-                value={titleInputValue}
-                className={styles.formBlock}
-              />
-              </FormControl>
-              <TextField
-                label="Add task description"
-                variant="outlined"
-                multiline
-                rows={4}
-                onChange={handleDescrInputChange}
-                value={descrInputValue}
-                className={styles.formBlock}
-                fullWidth={true}
-              />
-              <TextField
-                label="Set deadline"
-                type="date"
-                value={deadline}
-                onChange={handleDateChange}
-                className={styles.formBlock}
-                InputLabelProps={{
-                  shrink: true,
-                }}
-              />
-              <FormControlLabel
-                label="Urgent task"
-                control={
-                  <Switch
-                    color="primary"
-                    checked={isUrgent}
-                    onClick={handleSwitchClick}
-                  />
-                }
-                className={styles.formBlock}
-              />
-              <Button 
-                variant="contained" 
-                color="secondary" 
-                type="submit"
-              >
-                Add task to the list
-              </Button>
-            </form>
-          </AccordionDetails>
+            <InputLabel>Enter a title for this card</InputLabel>
+            <OutlinedInput 
+              multiline={true}
+              fullWidth={true}
+              onChange={handleTitleInputChange}
+              value={titleInputValue}
+              className={styles.formBlock}
+            />
+            </FormControl>
+            <TextField
+              label="Add task description"
+              variant="outlined"
+              multiline
+              rows={4}
+              onChange={handleDescrInputChange}
+              value={descrInputValue}
+              className={styles.formBlock}
+              fullWidth={true}
+            />
+            <TextField
+              label="Set deadline"
+              type="date"
+              value={deadline}
+              onChange={handleDateChange}
+              className={styles.formBlock}
+              InputLabelProps={{
+                shrink: true,
+              }}
+            />
+            <FormControlLabel
+              label="Urgent task"
+              control={
+                <Switch
+                  color="primary"
+                  checked={isUrgent}
+                  onClick={handleSwitchClick}
+                />
+              }
+              className={styles.formBlock}
+            />
+            <Button 
+              variant="contained" 
+              color="secondary" 
+              type="submit"
+            >
+              Add task to the list
+            </Button>
+          </form>
+        </AccordionDetails>
       </Accordion>
     </Paper>
   )

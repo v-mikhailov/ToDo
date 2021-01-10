@@ -18,6 +18,10 @@ const useStyles = makeStyles((theme) => ({
   },
   input: {
     width: '100%'
+  },
+  button: {
+    display: 'block',
+    marginLeft: 'auto'
   }
 }));
 
@@ -67,13 +71,16 @@ const NewColumnForm : React.FC<NewColumnFormProps> = ({ deskId }) => {
           label="Add another column" 
           value={inputValue}
           onChange={handleInputChange}
-          className={styles.input}/>
+          className={styles.input}
+        />
       </AccordionSummary>
       <AccordionDetails>
       <Button 
         onClick={handeButtonClick}
         variant="contained" 
-        color="secondary">
+        color="secondary"
+        className={styles.button}
+      >
         Add column
       </Button>
       </AccordionDetails>

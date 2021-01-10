@@ -23,25 +23,29 @@ const useStyles = makeStyles((theme) => ({
   },
   cardTitle: {
     textAlign: 'center'
+  },
+  subtitle: {
+    textAlign: 'center'
   }
 }));
 
 interface ListColumnProps {
-  // columns: any,
   columns: any,
   deskId: number
 } 
-// const ListColumn: React.FC<ListColumnProps> = ({deskId}) => {
+
 const ListColumn: React.FC<ListColumnProps> = ({columns, deskId}) => {
-  // Что означает ошибка TS при использованиии useSelector?
-  // const columns = useSelector((state: RootState) => state.columns.columns);
   const newTasks = useSelector((state: RootState) => state.tasks.tasks)
   const styles = useStyles();
+  
+  const filteredColumns = columns.filter((column: ColumnInterface) => {
+    return (column.deskId === deskId || column.deskId === 0)
 
-  const filteredColumns = columns.filter((column: ColumnInterface) => (column.deskId === deskId || column.deskId === 0));
+  });
   const filterTasks = (tasks: TaskInterface[], columnId: number) => tasks.filter((task: TaskInterface) => (task.columnId === columnId && task.deskId === deskId));
 
   return (
+
     filteredColumns.map((column: ColumnInterface) => {
       const tasks = filterTasks(newTasks, column.id);
         return(
@@ -52,7 +56,7 @@ const ListColumn: React.FC<ListColumnProps> = ({columns, deskId}) => {
               </Typography>
               { 
                 tasks.length === 0 ? (
-                    <p className="subtitle">Заданий нет!</p>
+                    <p className={styles.subtitle}>Заданий нет!</p>
                 ) : (
                   <ul className={styles.taskList}>
                     {

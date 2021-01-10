@@ -1,6 +1,6 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Dialog, DialogContent, DialogTitle, TextField, Divider, Button } from '@material-ui/core';
+import { Dialog, DialogContent, DialogTitle, TextField, Divider, Button, makeStyles, Theme } from '@material-ui/core';
 import { createDesk } from '../Redux/acion';
 import { DeskInterface } from '../Interfaces/interfaces'
 import { RootState } from '../Redux/rootReducer';
@@ -10,10 +10,27 @@ interface NewDeskFormPopupProps {
   onClose: () => void,
 }
 
+const useStyles = makeStyles((theme: Theme) => ({
+  root: {
+    width: '250px'
+  },
+  textField: {
+    marginBottom: theme.spacing(2)
+  },
+  button: {
+    display: 'block',
+    marginLeft: 'auto'
+  },
+  dialogContent: {
+    paddingBottom: theme.spacing(2)
+  }
+}))
+
 const NewDeskFormPopup: React.FC<NewDeskFormPopupProps> = ({open, onClose}) => {
   const [inputValue, setInputValue] = React.useState('');
   const desks = useSelector((state: RootState) => state.desks.desks)
   const dispatch = useDispatch();
+  const styles = useStyles();
 
   const calcNextDeskId = (desks: DeskInterface[]) => {
     const lastDesk = desks[desks.length - 1];
@@ -47,23 +64,25 @@ const NewDeskFormPopup: React.FC<NewDeskFormPopupProps> = ({open, onClose}) => {
       open={open}
       onClose={handleClose}
     >
-      <DialogTitle>
+      <DialogTitle className={styles.root}>
         New Desk
       </DialogTitle>
       <Divider />
-      <DialogContent>
+      <DialogContent className={styles.dialogContent}>
         <form noValidate onSubmit={handleSubmit}>
           <TextField
             label="Desk name"
             fullWidth={true}
             value={inputValue}
             onChange={handleInputChange}
+            className={styles.textField}
           />
           <Button 
             variant="contained" 
             color="secondary"
             size="small"
             type="submit"
+            className={styles.button}
           >   
           Create
         </Button>

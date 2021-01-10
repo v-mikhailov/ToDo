@@ -56,7 +56,6 @@ export const createDesk = (deskData: DeskInterface): DeskActionInterface => {
   }
 }
 
-// DeskName: DeskInterface если ничего не измениться
 export const changeDeskName = (deskName: any): DeskActionInterface => {
   return {
     type: CHANGE_DESK_NAME,
