@@ -116,7 +116,6 @@ const Header: React.FC<HeaderProps> = ({deskName, deskId}) => {
           </Box>
         </Grid>
      </Toolbar>
-
      <DesksListPopup 
         open={desksListPopupIsOpen}
         onClose={handleDeskListPopupClose}

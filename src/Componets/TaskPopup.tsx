@@ -155,7 +155,13 @@ const TaskPopup = () => {
                   {
                     columns.map(column => {
                       if (column.id !== fullTask.task?.columnId) {
-                        return <MoveToCard currentColumn={column} currentTaskId={fullTask.task!.id} key={column.id++}/>
+                        return (
+                          <MoveToCard 
+                            currentColumn={column} 
+                            currentTaskId={fullTask.task!.id} 
+                            key={column.id}
+                          />
+                        )
                       }
                     })
                   }

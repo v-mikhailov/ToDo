@@ -2,14 +2,16 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { applyMiddleware, createStore } from 'redux';
-import thunk from 'redux-thunk';
+import { createStore } from 'redux';
 import { rootReducer } from './Redux/rootReducer';
 import { Provider } from 'react-redux';
 
 import './index.css';
 
-const store = createStore(rootReducer, applyMiddleware(thunk));
+const store = createStore(
+  rootReducer,
+  (window as any).__REDUX_DEVTOOLS_EXTENSION__ && (window as any).__REDUX_DEVTOOLS_EXTENSION__()
+  );
 store.subscribe(() => console.log('stroe', store.getState()));
 
 ReactDOM.render(

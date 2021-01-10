@@ -37,11 +37,15 @@ interface ListColumnProps {
 const ListColumn: React.FC<ListColumnProps> = ({columns, deskId}) => {
   const newTasks = useSelector((state: RootState) => state.tasks.tasks)
   const styles = useStyles();
+  
+  const filteredColumns = columns.filter((column: ColumnInterface) => {
+    return (column.deskId === deskId || column.deskId === 0)
 
-  const filteredColumns = columns.filter((column: ColumnInterface) => (column.deskId === deskId || column.deskId === 0));
+  });
   const filterTasks = (tasks: TaskInterface[], columnId: number) => tasks.filter((task: TaskInterface) => (task.columnId === columnId && task.deskId === deskId));
 
   return (
+
     filteredColumns.map((column: ColumnInterface) => {
       const tasks = filterTasks(newTasks, column.id);
         return(
